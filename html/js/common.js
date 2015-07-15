@@ -8,13 +8,12 @@ $(function(){
 	console.log(1);
 	getData();
 	function getData(){
-		if (!flag) {
+		if (!flag||ipage>6) {
 			return;
 		};
-
 		$.getJSON(oUrl, {page:ipage}, function(data){
 			$.each(data, function(index, val) {
-				var els = '<img src="'+val.image+'" />';
+				var els = '<div class="detail-wrapper"><img src="'+val.image+'" width="100%" /></div>';
 				container.append(els);
 			});
 			oHeight = container.height();
@@ -24,7 +23,8 @@ $(function(){
 			if (oHeight < initHeight) {
 				getData();
 			};
-		})
+		});
+		ipage++;
 	}
 
 	$(window).on('scroll', function(event) {
