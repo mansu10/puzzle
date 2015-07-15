@@ -38,6 +38,7 @@ body {
     font-family: '微软雅黑','LatoRegular', 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, sans-serif !important;
     line-height: 21px;
     color: #636e7b;
+    background-color: #ebeced;
 }
 
 body.notfound,
@@ -101,25 +102,7 @@ ul {
 
 /********** 2. Header Panel **********/
 /*************************************/
-.w50 {
-    width: 50%;
-    height: 180px;
-}
-.w30 {
-    width: 33.3333%;
-    float: left;
-    height: 200px;
-    padding: 5px;
-    img {
-        width: 100%;
-        height: 100%;
-        background-color: #ccc;
-    }
-}
-.w25 {
-    width: 25%;
-    height: 100px;
-}
+
 
 header {
     height: 50px;
@@ -162,21 +145,16 @@ header {
 }
 
 .disp-wrapper {
-    .carousel {
+    .caption {
         height: 350px;
+        min-width: 1000px;
         background-color: #ddd;
         position: relative;
-        .fa-chevron-left {
+        overflow: hidden;
+        p {
             position: absolute;
-            top: 50%;
-            left: 5%;
-            cursor: pointer;
-        }
-        .fa-chevron-right {
-            position: absolute;
-            top: 50%;
-            right: 5%;
-            cursor: pointer;
+            right: 20%;
+            top: 60%;
         }
     }
     .search {
@@ -200,21 +178,6 @@ header {
             }
         }
     }
-    .subjects {
-        height: 75px;
-        background-color: #ccc;
-        padding: 0 50px;
-        .item {
-            width: 116px;
-            height: 75px;
-            float: left;
-            background-color: #999;
-            margin: 0 20px;
-            text-align: center;
-            line-height: 75px;
-            color: #fff;
-        }
-    }
 }
 
 .content-wrapper {
@@ -224,22 +187,13 @@ header {
         background-color: #bcbcbc;
         float: left;
         //for instance
-        padding: 10px 5%;
     }
     .side-content {
         width: 30%;
-        // height: 500px;
+        height: 500px;
         background-color: #e9e9e9;
         float: left;
-        // for instance
-        div {
-            padding: 10px;
-            float: left;
-            img {
-                width: 100%;
-                height: 100%;
-            }
-        }
+
     }
     &::after {
         content: "";
