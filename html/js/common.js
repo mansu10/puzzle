@@ -2,7 +2,7 @@
 //waterfall
 $(function(){
 	var oUrl = './data/data.json';
-	var container = $('.main-content');
+	var container = $('#waterfall');
 	var flag = true;
 	var ipage = 0;
 	console.log(1);
