@@ -192,6 +192,28 @@ header {
             padding: 10px;
             float: left;
         }
+        .nav-tabs {
+            padding: 50px;
+            &::after {
+                content: "";
+                display: block;
+                clear: both;
+            }
+            .tabs-heading li {
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                cursor: pointer;
+                float: left;
+                width: 25%;
+                background-color: #fff;
+                border-bottom: 2px solid transparent;
+                &:hover {
+                    border-bottom: 2px solid #e034f1;
+                    background-color: #eee;
+                }
+            }
+        }
     }
     .side-content {
         width: 30%;
