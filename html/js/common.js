@@ -2,6 +2,7 @@ $(function(){
 	//loadpage
 	$.fn.loadpage = function(){
 		var pageUrl = $(this).attr('data-url');
+		console.log(pageUrl);
 		$('#loadhtml').load(pageUrl+'.html',function(){
 			/* Stuff to do after the page is loaded */
 		});
@@ -61,6 +62,16 @@ $(function(){
 		$(document).on('click', '.scroll', function(event) {
 			$('html, body').animate({scrollTop: 0}, 200);
 		});
+	})
+
+	$(function(){
+		$(document).on('click', '.nav-tabs li', function(event) {
+			$(this).loadpage();
+		});
+		var init = function(){
+			$('.nav-tabs li').first().loadpage();
+		}
+		init();
 	})
 
 })
