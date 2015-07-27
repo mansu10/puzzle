@@ -8,13 +8,16 @@
 	<title></title>
 
 	<link rel="stylesheet/less" type="text/less" href="css/default.less">
+	<link rel="stylesheet/less" type="text/less" href="css/detail.less">
+	<link rel="stylesheet" type="text/css" href="css/jqcloud.css">
 	<script type="text/javascript" src="js/less.js"></script>
+
 </head>
 <body>
 	<header>
 		<div class="logo">logo</div>
 		<ul class="nav">
-			<li>首页</li>
+			<li><a href="index.html">首页</a></li>
 			<li>论坛</li>
 			<li>展示</li>
 			<li>商城</li>
@@ -27,28 +30,38 @@
 	<section class="content-wrapper">
 		<div class="main-content">
 			<div class="nav-tabs">
-				<div class="tabs-title"></div>
+				<div class="tabs-title">
+					<h3>Product Name</h3>
+					<p>some description goes here or labels for its</p>
+				</div>
 				<ul class="tabs-heading">
 					<li data-url="product">Product</li>
 					<li data-url="reviews">Reviews</li>
 					<li data-url="discuss">Discuss</li>
 					<li data-url="activities">Activities</li>
 				</ul>
-				<div class="tabs-content" id="loadhtml">产品，评测，讨论，动态
-				tab1 包含轮播图</div>
+				<div class="tabs-content" id="loadhtml">loading...</div>
 			</div>
 		</div>
-		<div class="side-content">
-			<div class="innner-block">
-				淘宝链接
+		<aside class="side-content">
+			<div class="inner-block">
+				<div class="sales">
+					<button class="btn">淘宝链接</button>
+				</div>
+				
 			</div>
-			<div>
-				喜欢，拥有，分享，加入列表
+			<div class="inner-block">
+				<ul class="preference">
+					<li><i class="fa fa-heart"></i>like</li>
+					<li>own</li>
+					<li>share</li>
+					<li>add to list</li>
+				</ul>
 			</div>
-			<div>
-				标签列表
+			<div class="inner-block" id="label-cloud">
+				
 			</div>
-		</div>
+		</aside>
 	</section>
 
 	<footer>
@@ -90,5 +103,56 @@
 	</footer>
 </body>
 <script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="js/jquery.touchslider.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/jqcloud-1.0.4.js"></script>
+<script type="text/javascript">
+      var word_list = [
+        {text: "Lorem", weight: 13, link: "https://github.com/DukeLeNoir/jQCloud"},
+        {text: "Ipsum", weight: 10.5, html: {title: "My Title", "class": "custom-class"}, link: {href: "http://jquery.com/", target: "_blank"}},
+        {text: "Dolor", weight: 9.4},
+        {text: "Sit", weight: 8},
+        {text: "Amet", weight: 6.2},
+        {text: "Consectetur", weight: 5},
+        {text: "Adipiscing", weight: 5},
+        {text: "Elit", weight: 5},
+        {text: "Nam et", weight: 5},
+        {text: "Leo", weight: 4},
+        {text: "Sapien", weight: 4},
+        {text: "Pellentesque", weight: 3},
+        {text: "habitant", weight: 3},
+        {text: "morbi", weight: 3},
+        {text: "tristisque", weight: 3},
+        {text: "senectus", weight: 3},
+        {text: "et netus", weight: 3},
+        {text: "et malesuada", weight: 3},
+        {text: "fames", weight: 2},
+        {text: "ac turpis", weight: 2},
+        {text: "egestas", weight: 2},
+        {text: "Aenean", weight: 2},
+        {text: "vestibulum", weight: 2},
+        {text: "elit", weight: 2},
+        {text: "sit amet", weight: 2},
+        {text: "metus", weight: 2},
+        {text: "adipiscing", weight: 2},
+        {text: "ut ultrices", weight: 2},
+        {text: "justo", weight: 1},
+        {text: "dictum", weight: 1},
+        {text: "Ut et leo", weight: 1},
+        {text: "metus", weight: 1},
+        {text: "at molestie", weight: 1},
+        {text: "purus", weight: 1},
+        {text: "Curabitur", weight: 1},
+        {text: "diam", weight: 1},
+        {text: "dui", weight: 1},
+        {text: "ullamcorper", weight: 1},
+        {text: "id vuluptate ut", weight: 1},
+        {text: "mattis", weight: 1},
+        {text: "et nulla", weight: 1},
+        {text: "Sed", weight: 1}
+      ];
+      $(function() {
+        $("#label-cloud").jQCloud(word_list);
+      });
+</script>
 </html>

@@ -5,6 +5,7 @@ $(function(){
 		console.log(pageUrl);
 		$('#loadhtml').load(pageUrl+'.html',function(){
 			/* Stuff to do after the page is loaded */
+			// alert(2);
 		});
 	}
 
@@ -26,7 +27,7 @@ $(function(){
 					container.append(els);
 				});
 				oHeight = container.height();
-				console.log('oHeight:'+oHeight);
+				// console.log('oHeight:'+oHeight);
 				initHeight = window.document.body.clientHeight;
 				window.document.body.clientHeight
 				if (oHeight < initHeight) {
@@ -42,7 +43,7 @@ $(function(){
 			console.log(document.body.scrollHeight);
 			var totalHeight = $(window).scrollTop() + window.document.body.clientHeight + 300;
 			var contentHeight = document.body.scrollHeight;
-			console.log(totalHeight);
+			// console.log(totalHeight);
 			if (totalHeight >= contentHeight) {
 				getData();
 			};
@@ -67,9 +68,10 @@ $(function(){
 	$(function(){
 		$(document).on('click', '.nav-tabs li', function(event) {
 			$(this).loadpage();
+			$(this).addClass('active').siblings('li').removeClass('active');
 		});
 		var init = function(){
-			$('.nav-tabs li').first().loadpage();
+			$('.nav-tabs li:nth(0)').addClass('active').loadpage();
 		}
 		init();
 	})
