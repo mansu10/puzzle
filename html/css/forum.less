@@ -1,0 +1,50 @@
+
+.board {
+	height: 300px;
+	background-color: #ffb11b;
+}
+.plates {
+	ul {
+		width: 800px;
+		margin: 0 auto;
+		li {
+			padding: 10px;
+			margin: 10px 0;
+			border-bottom: 1px dashed #333;
+			.plate-logo {
+				width: 150px;
+				float: left;
+				a {
+					width: 100px;
+					height: 100px;
+					display: table-cell;
+					background-color: #305a56;
+					border-radius: 50%;
+					position: relative;
+					text-align: center;
+					vertical-align: middle;
+					img {
+						vertical-align: middle;
+						width: 80px;
+						height: 80px;
+					}
+				}
+				
+			}
+			.plate-desc {
+				padding: 20px 0;
+				float: left;
+			}
+			&::after {
+				content: "";
+				display: block;
+				clear: both;
+			}	
+		}
+		
+	}
+}
+.member-info {
+	height: 300px;
+	background-color: #db4d6d;
+}
