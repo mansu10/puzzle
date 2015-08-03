@@ -10,46 +10,150 @@ $(function(){
 	}
 
 	//waterfall
+	// $(function(){
+	// 	var oUrl = './data/data.json';
+	// 	var container = $('#waterfall');
+	// 	var flag = true;
+	// 	var ipage = 0;
+	// 	console.log(1);
+	// 	getData();
+	// 	function getData(){
+	// 		if (!flag||ipage>6) {
+	// 			return;
+	// 		};
+	// 		$.getJSON(oUrl, {page:ipage}, function(data){
+	// 			$.each(data, function(index, val) {
+	// 				var els = '<div class="detail-wrapper"><img src="'+val.image+'" width="100%" /></div>';
+	// 				container.append(els);
+	// 			});
+	// 			oHeight = container.height();
+	// 			// console.log('oHeight:'+oHeight);
+	// 			initHeight = window.document.body.clientHeight;
+	// 			window.document.body.clientHeight
+	// 			if (oHeight < initHeight) {
+	// 				getData();
+	// 			};
+	// 		});
+	// 		ipage++;
+	// 	}
+
+	// 	$(window).on('scroll', function(event) {
+	// 		console.log(window.document.body.clientHeight);
+	// 		console.log($(window).height());
+	// 		console.log(document.body.scrollHeight);
+	// 		var totalHeight = $(window).scrollTop() + window.document.body.clientHeight + 300;
+	// 		var contentHeight = document.body.scrollHeight;
+	// 		// console.log(totalHeight);
+	// 		if (totalHeight >= contentHeight) {
+	// 			getData();
+	// 		};
+	// 	});
+	// })
+	
+	//waterfall 2th edition
 	$(function(){
-		var oUrl = './data/data.json';
+		var configMap = {
+			icols : 0,
+			ipage : 2,
+			iwidth : 220,
+			sUrl : 'http://www.wookmark.com/api/json/popular?callback=?',
+			loaded : true
+		};
 		var container = $('#waterfall');
-		var flag = true;
-		var ipage = 0;
-		console.log(1);
-		getData();
-		function getData(){
-			if (!flag||ipage>6) {
+		var arrTop = [];
+		var arrLeft = [];
+		var outerWidth = configMap.iwidth + 10;
+		init();
+		function setCols() {
+			configMap.icols = Math.floor(container.width()/outerWidth);
+			if (configMap.icols < 3) {
+				configMap.icols = 3;
+			} else if (configMap.icols > 6) {
+				configMap.icols = 6;
+			};
+			// alert('setcols');
+		};
+
+		function getData() {
+			if (!configMap.loaded) {
 				return;
 			};
-			$.getJSON(oUrl, {page:ipage}, function(data){
+			// alert('getdata1');
+			configMap.loaded = false;
+			configMap.ipage++;
+			console.log(configMap.ipage);
+			$.getJSON(configMap.sUrl, {page:configMap.ipage}, function(data){
 				$.each(data, function(index, val) {
-					var els = '<div class="detail-wrapper"><img src="'+val.image+'" width="100%" /></div>';
-					container.append(els);
+					var itemBox = $('<div class="item-box"><ul class="item-caption">\
+										<li><span class="fa fa-heart"></span></li>\
+										<li><span class="fa fa-share"></span></li>\
+										<li><span class="fa fa-star"></span></li>\
+									</ul></div>');
+					var oImg = $('<img />');
+					var iHeight = val.height * (configMap.iwidth/val.width) + 10 + 30;
+					itemBox.css({
+						width: configMap.iwidth,
+						height: iHeight
+					});
+					oImg.css({
+						width: configMap.iwidth - 20
+					});
+					var index = getMin();
+					itemBox.css({
+						top: arrTop[index],
+						left: arrLeft[index]
+					});
+					arrTop[index] += iHeight + 10;
+					itemBox.prepend(oImg);
+					container.append(itemBox);
+					var objImg = new Image();
+					objImg.onload = function() {
+						oImg.attr('src', this.src);
+					}
+					objImg.src = val.preview;
+					resizeContainer();
+					configMap.loaded = true;
 				});
-				oHeight = container.height();
-				// console.log('oHeight:'+oHeight);
-				initHeight = window.document.body.clientHeight;
-				window.document.body.clientHeight
-				if (oHeight < initHeight) {
-					getData();
-				};
 			});
-			ipage++;
+		};
+
+		function getMin() {
+			var t = arrTop[0];
+			var index = 0;
+			for (var i = 1; i < arrTop.length; i++) {
+				if (arrTop[i] < t) {
+					t = arrTop[i];
+					index = i;
+				}
+			};
+			return index;
+		};
+
+		function init() {
+			setCols();
+			for (var i = 0; i < configMap.icols; i++) {
+				arrTop[i] = 5;
+				arrLeft[i] = outerWidth * i + 5;
+			};
+			console.log('init');
+			getData();
+		};
+
+		function resizeContainer() {
+			var index = getMin();
+			var height = arrTop[index] + 455;
+			$('#waterfall').css('height', height);
+
 		}
 
 		$(window).on('scroll', function(event) {
-			console.log(window.document.body.clientHeight);
-			console.log($(window).height());
-			console.log(document.body.scrollHeight);
-			var totalHeight = $(window).scrollTop() + window.document.body.clientHeight + 300;
-			var contentHeight = document.body.scrollHeight;
-			// console.log(totalHeight);
-			if (totalHeight >= contentHeight) {
+			var index = getMin();
+			var totalHeight = $(window).scrollTop() + $(window).innerHeight();
+			if (arrTop[index] + 500 < totalHeight) {
 				getData();
 			};
 		});
-	})
-
+	});
 
 	//scroll top
 	$(function(){
