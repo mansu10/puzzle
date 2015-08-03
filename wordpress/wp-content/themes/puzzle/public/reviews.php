@@ -1,0 +1,83 @@
+<div class="reviews">
+	<div class="add-comment">
+		<button class="btn">write commmets</button>
+	</div>
+	<article class="comment-wrapper">
+		<figure>
+			<a href="#" class="avatar"><img src="./img/avatar.png"></a>
+			<figcaption>User Name</figcaption>
+		</figure>
+		<header>
+			What about this?
+		</header>
+		<section>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		</section>
+		<footer>
+			<div class="addon-func">
+				<span class="fa fa-heart"></span><span>25</span>
+				<span class="fa fa-thumbs-up"></span><span>15</span>	
+			</div>
+			<div class="post-time">
+				2015-07-22 21:55
+			</div>
+		</footer>
+	</article>
+	<article class="comment-wrapper">
+		<figure>
+			<a href="#" class="avatar"><img src="./img/avatar.png"></a>
+			<figcaption>User Name</figcaption>
+		</figure>
+		<header>
+			What about this?
+		</header>
+		<section>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		</section>
+		<footer>
+			<div class="addon-func">
+				<span class="fa fa-heart"></span><span>25</span>
+				<span class="fa fa-thumbs-up"></span><span>15</span>	
+			</div>
+			<div class="post-time">
+				2015-07-22 21:55
+			</div>
+		</footer>
+	</article>
+	<article class="comment-wrapper">
+		<figure>
+			<a href="#" class="avatar"><img src="./img/avatar.png"></a>
+			<figcaption>User Name</figcaption>
+		</figure>
+		<header>
+			What about this?
+		</header>
+		<section>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		</section>
+		<footer>
+			<div class="addon-func">
+				<span class="fa fa-heart"></span><span>25</span>
+				<span class="fa fa-thumbs-up"></span><span>15</span>	
+			</div>
+			<div class="post-time">
+				2015-07-22 21:55
+			</div>
+		</footer>
+	</article>
+</div>
