@@ -90,6 +90,10 @@ add_filter( 'update_footer', 'change_footer_version', 9999);
 //         $wp_admin_bar->remove_menu('wp-logo');
 // }
 // add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
+
+
+require_once('control.php');
+
 ?>
 
 

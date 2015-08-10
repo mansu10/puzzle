@@ -22,7 +22,7 @@
 		</ul>
 		
 		<div class="user-wrapper">
-			<div>注册</div>
-			<div>用户</div>
+			<div><a href="./wp-login.php">登录</a></div>
+			<div><a href="<?php bloginfo('url'); ?>/wp-login.php?action=register" target="_blank">注册</a></div>
 		</div>
 	</header>
