@@ -2,47 +2,206 @@
 /**
  * The template for displaying all single posts and attachments
  *
- * @package WordPress
- * @subpackage Twenty_Fifteen
- * @since Twenty Fifteen 1.0
+ * @package
+ * @subpackage
+ * @since
  */
 
-get_header(); ?>
+?>
+<?php get_header(); ?>
+	<?php if (have_posts()) : the_post(); update_post_caches($posts); ?>
+	<section class="content-wrapper">
+		<div class="main-content">
+			<div class="nav-tabs">
+				<div class="tabs-title">
+					<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+					<p><?php the_tags('标签：', ', ', ''); ?> &bull; <?php the_time('Y年n月j日') ?> &bull; <?php comments_popup_link('0 条评论', '1 条评论', '% 条评论', '', '评论已关闭'); ?><?php edit_post_link('编辑', ' &bull; ', ''); ?></p>
+				</div>
+				<ul class="tabs-heading">
+					<li data-url="product">Product</li>
+					<li data-url="reviews">Reviews</li>
+					<li data-url="discuss">Discuss</li>
+					<li data-url="activities">Activities</li>
+				</ul>
+				<div class="tabs-content" id="loadContent">
+					<!-- 产品slider -->
+					<div class="product tabs" id="product">
+					    <div class="touchslider">
+					        <div class="touchslider-viewport" style="width:700;overflow:hidden;margin:0 auto;height:400px;">
+					            <div>
+					                <div class="touchslider-item">
+					                    <img src="http://fpoimg.com/700x400?text=First" alt="">
+					                </div>
+					                <div class="touchslider-item">
+					                    <img src="http://fpoimg.com/700x400?text=Second" alt="">
+					                </div>
+					                <div class="touchslider-item">
+					                    <img src="http://fpoimg.com/700x400?text=Third" alt="">
+					                </div>
+					            </div>
+					        </div>
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
-
-		<?php
-		// Start the loop.
-		while ( have_posts() ) : the_post();
-
-			/*
-			 * Include the post format-specific template for the content. If you want to
-			 * use this in a child theme, then include a file called called content-___.php
-			 * (where ___ is the post format) and that will be used instead.
-			 */
-			get_template_part( 'content', get_post_format() );
-
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
-
-			// Previous/next post navigation.
-			the_post_navigation( array(
-				'next_text' => '<span class="meta-nav" aria-hidden="true">' . __( 'Next', 'twentyfifteen' ) . '</span> ' .
-					'<span class="screen-reader-text">' . __( 'Next post:', 'twentyfifteen' ) . '</span> ' .
-					'<span class="post-title">%title</span>',
-				'prev_text' => '<span class="meta-nav" aria-hidden="true">' . __( 'Previous', 'twentyfifteen' ) . '</span> ' .
-					'<span class="screen-reader-text">' . __( 'Previous post:', 'twentyfifteen' ) . '</span> ' .
-					'<span class="post-title">%title</span>',
-			) );
-
-		// End the loop.
-		endwhile;
-		?>
-
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
+					        <div class="touchslider-nav">
+					            <span class="touchslider-prev fa fa-chevron-left"></span>
+					            <span class="touchslider-nav-item touchslider-nav-item-current"></span>
+					            <span class="touchslider-nav-item"></span>
+					            <span class="touchslider-nav-item"></span>
+					            <span class="touchslider-next fa fa-chevron-right"></span>
+					        </div>
+					    </div>
+					    <div class="description">
+					    	<?php the_content() ?>
+					    </div>
+					</div>
+					<!-- reviews -->
+					<div class="reviews tabs" id="reviews">
+						<div class="add-comment">
+							<button class="btn">write commmets</button>
+						</div>
+						<article class="comment-wrapper">
+							<figure>
+								<a href="#" class="avatar"><img src="<?php bloginfo('template_url'); ?>/img/avatar.png"></a>
+								<figcaption>User Name</figcaption>
+							</figure>
+							<header>
+								What about this?
+							</header>
+							<section>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+								consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+								proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</section>
+							<footer>
+								<div class="addon-func">
+									<span class="fa fa-heart"></span><span>25</span>
+									<span class="fa fa-thumbs-up"></span><span>15</span>	
+								</div>
+								<div class="post-time">
+									2015-07-22 21:55
+								</div>
+							</footer>
+						</article>
+						<article class="comment-wrapper">
+							<figure>
+								<a href="#" class="avatar"><img src="<?php bloginfo('template_url'); ?>/img/avatar.png"></a>
+								<figcaption>User Name</figcaption>
+							</figure>
+							<header>
+								What about this?
+							</header>
+							<section>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+								consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+								proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</section>
+							<footer>
+								<div class="addon-func">
+									<span class="fa fa-heart"></span><span>25</span>
+									<span class="fa fa-thumbs-up"></span><span>15</span>	
+								</div>
+								<div class="post-time">
+									2015-07-22 21:55
+								</div>
+							</footer>
+						</article>
+						<article class="comment-wrapper">
+							<figure>
+								<a href="#" class="avatar"><img src="<?php bloginfo('template_url'); ?>/img/avatar.png"></a>
+								<figcaption>User Name</figcaption>
+							</figure>
+							<header>
+								What about this?
+							</header>
+							<section>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+								consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+								proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</section>
+							<footer>
+								<div class="addon-func">
+									<span class="fa fa-heart"></span><span>25</span>
+									<span class="fa fa-thumbs-up"></span><span>15</span>	
+								</div>
+								<div class="post-time">
+									2015-07-22 21:55
+								</div>
+							</footer>
+						</article>
+					</div>
+					<!-- dicuss -->
+					<div class="discuss tabs" id="discuss">
+						<?php comments_template(); ?>
+					</div>
+					<!-- activities -->
+					<div class="activities tabs" id="activities">
+						<div class="discussion-list">
+							<article>
+								<figure>
+									<a href="" title=""><img src="<?php bloginfo('template_url'); ?>/img/avatar.png" height="50" width="50"></a>
+									<figcaption>Name</figcaption>
+								</figure>
+								<section>Activities goes here</section>
+								<footer>
+									<span>post time</span>
+								</footer>
+							</article>		
+							<article>
+								<figure>
+									<a href="" title=""><img src="<?php bloginfo('template_url'); ?>/img/avatar.png" height="50" width="50"></a>
+									<figcaption>Name</figcaption>
+								</figure>
+								<section>Activities goes here</section>
+								<footer>
+									<span>post time</span>
+								</footer>
+							</article>	
+							<article>
+								<figure>
+									<a href="" title=""><img src="<?php bloginfo('template_url'); ?>/img/avatar.png" height="50" width="50"></a>
+									<figcaption>Name</figcaption>
+								</figure>
+								<section>Activities goes here</section>
+								<footer>
+									<span>post time</span>
+								</footer>
+							</article>	
+						</div>
+					</div>					
+				</div>
+			</div>
+		</div>
+		<aside class="side-content">
+			<div class="inner-block">
+				<div class="sales">
+					<button class="btn">淘宝链接</button>
+				</div>
+				
+			</div>
+			<div class="inner-block">
+				<ul class="preference">
+					<li><i class="fa fa-heart"></i>like</li>
+					<li>own</li>
+					<li>share</li>
+					<li>add to list</li>
+				</ul>
+			</div>
+			<div class="inner-block" id="label-cloud">
+				
+			</div>
+		</aside>
+	</section>
+<?php else : ?>
+<div class="errorbox">
+	没有文章！
+</div>	
+<?php endif; ?>
 <?php get_footer(); ?>

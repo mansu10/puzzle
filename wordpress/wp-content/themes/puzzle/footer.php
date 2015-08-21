@@ -88,5 +88,22 @@
       $(function() {
         $("#label-cloud").jQCloud(word_list);
       });
+    jQuery(function($) {
+        $(".touchslider").touchSlider({
+            container: this,
+            duration: 350, // 动画速度
+            delay: 3000, // 动画时间间隔
+            margin: 5,
+            mouseTouch: true,
+            namespace: "touchslider",
+            next: ".touchslider-next", // next 样式指定
+            pagination: ".touchslider-nav-item",
+            currentClass: "touchslider-nav-item-current", // current 样式指定
+            prev: ".touchslider-prev", // prev 样式指定
+            // scroller: viewport.children(),
+            autoplay: true, // 自动播放
+            viewport: ".touchslider-viewport"
+        });
+    });
 </script>
 </html>

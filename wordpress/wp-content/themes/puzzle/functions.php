@@ -9,6 +9,7 @@ remove_action('wp_head', 'feed_links',2 );
 remove_action('wp_head', 'feed_links_extra',3 );//清除feed信息
 remove_action('wp_head', 'wp_shortlink_wp_head',10,0 );
 
+require_once('control.php');
 
 // 移除不需要的菜单栏
 function removeMenus() {
@@ -91,8 +92,67 @@ add_filter( 'update_footer', 'change_footer_version', 9999);
 // }
 // add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
 
+//excerpt被用作在首页上简略的文章信息
+//此处设定显示的字符数
+function new_excerpt_length($length) {
+    return 100;
+}
+add_filter('excerpt_length', 'new_excerpt_length');
 
-require_once('control.php');
+
+//使主页文章支持缩略图功能
+if ( function_exists( 'add_theme_support' ) ) {
+    add_theme_support( 'post-thumbnails' );
+}
+//抓取文章中的第一张图片
+function p2_catch_that_image() {
+	global $post, $posts;
+	$first_img = '';
+	ob_start();
+	ob_end_clean();
+	$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', get_the_post_thumbnail($post->ID, 'large'), $matches);
+	$first_img = $matches [1] [0];
+	if(empty($first_img)){
+		$first_img = get_bloginfo('template_url') . '/i/default.jpg';
+	}
+	return $first_img;
+}
+
+function p2_catch_that_image_m() {
+	global $post, $posts;
+	$first_img = '';
+	ob_start();
+	ob_end_clean();
+	$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', get_the_post_thumbnail($post->ID, 'medium'), $matches);
+	$first_img = $matches [1] [0];
+	if(empty($first_img)){
+		$first_img = get_bloginfo('template_url') . '/i/default.jpg';
+	}
+	return $first_img;
+}
+
+function mansu_comment($comment, $args, $depth) {
+   $GLOBALS['comment'] = $comment;
+   ?>
+	<div class="discussion-list">
+		<article>
+			<figure>
+				<a href=""><img src="<?php bloginfo('template_url'); ?>/img/avatar.png" height="50" width="50"></a>
+				<figcaption><?php printf(__('<cite class="author_name">%s</cite>'), get_comment_author_link()); ?></figcaption>
+			</figure>
+			<section>
+				<p><?php comment_text(); ?></p>
+			</section>
+			<footer>
+				<span><?php echo get_comment_time('Y-m-d H:i'); ?></span>
+				<span class="fa fa-share-alt"></span>
+				<span class="fa fa-thumbs-up"></span>
+			</footer>
+		</article>
+	</div>
+   <?php
+}
+
 
 ?>
 

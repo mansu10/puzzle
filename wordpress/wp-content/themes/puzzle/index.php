@@ -13,7 +13,7 @@
 	</section>
 	<section class="content-wrapper">
 		<div class="main-content" id="waterfall">
-			<!-- <img src="img/1.jpg" height="" width="30%"> -->
+			<?php get_template_part('loop', 'index'); ?>
 		</div>
 		<div class="side-content">
 			<div class="ranks">

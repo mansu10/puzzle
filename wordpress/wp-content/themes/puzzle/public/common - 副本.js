@@ -1,4 +1,55 @@
 $(function(){
+	//loadpage
+	$.fn.loadpage = function(){
+		var pageUrl = $(this).attr('data-url');
+		console.log(pageUrl);
+		$('#loadhtml').load(pageUrl+'.php',function(){
+			/* Stuff to do after the page is loaded */
+			// alert(2);
+		});
+	}
+
+	//waterfall
+	// $(function(){
+	// 	var oUrl = './data/data.json';
+	// 	var container = $('#waterfall');
+	// 	var flag = true;
+	// 	var ipage = 0;
+	// 	console.log(1);
+	// 	getData();
+	// 	function getData(){
+	// 		if (!flag||ipage>6) {
+	// 			return;
+	// 		};
+	// 		$.getJSON(oUrl, {page:ipage}, function(data){
+	// 			$.each(data, function(index, val) {
+	// 				var els = '<div class="detail-wrapper"><img src="'+val.image+'" width="100%" /></div>';
+	// 				container.append(els);
+	// 			});
+	// 			oHeight = container.height();
+	// 			// console.log('oHeight:'+oHeight);
+	// 			initHeight = window.document.body.clientHeight;
+	// 			window.document.body.clientHeight
+	// 			if (oHeight < initHeight) {
+	// 				getData();
+	// 			};
+	// 		});
+	// 		ipage++;
+	// 	}
+
+	// 	$(window).on('scroll', function(event) {
+	// 		console.log(window.document.body.clientHeight);
+	// 		console.log($(window).height());
+	// 		console.log(document.body.scrollHeight);
+	// 		var totalHeight = $(window).scrollTop() + window.document.body.clientHeight + 300;
+	// 		var contentHeight = document.body.scrollHeight;
+	// 		// console.log(totalHeight);
+	// 		if (totalHeight >= contentHeight) {
+	// 			getData();
+	// 		};
+	// 	});
+	// })
+	
 	//waterfall 2th edition
 	// $(function(){
 	// 	var configMap = {
@@ -104,76 +155,8 @@ $(function(){
 	// 	});
 	// });
 	$(function(){
-		var $container = $('#waterfall');
-		var items = $container.find('.item-box');
-		var itemsHeight = [];
-
-		var arrTop = [],
-			arrLeft = [];
-		var configMap = {
-			icols : 0,
-			iWidth : 225,
-			inums : 15,
-			ipage : 0,
-			loaded : true
-
-		};
-		init();
-		function init() {
-			setCols();
-			for(var i = 0; i < configMap.icols; i ++) {
-				arrTop[i] = 5;
-				arrLeft[i] = (configMap.iWidth + 10) * i + 5;
-			}
-			loadData();
-		}
-
-		function loadData() {
-			if (!configMap.loaded) {
-				return;
-			};
-			configMap.loaded = false;
-			items.each(function(index, el) {
-				var index = getMin();
-				$(this).css({
-					'top': arrTop[index],
-					'left': arrLeft[index],
-					'position': "absolute"
-				});
-				arrTop[index] += $(this).height() + 30;
-			});
-			resizeContainer();
-			configMap.loaded = true;
-		}
-
-		function setCols() {
-			configMap.icols = Math.floor($container.width()/configMap.iWidth);
-			console.log(configMap.icols);
-			if (configMap.icols < 2) {
-				configMap.icols = 2;
-			} else if (configMap.icols > 5) {
-				configMap.icols = 5;
-			};
-		};
-
-		function getMin() {
-			var t = arrTop[0];
-			var index = 0;
-			for (var i = 1; i < arrTop.length; i++) {
-				if (arrTop[i] < t) {
-					t = arrTop[i];
-					index = i;
-				}
-			};
-			return index;
-		};
-		function resizeContainer() {
-			var index = getMin();
-			var height = arrTop[index] + 150;
-			$('#waterfall').css('height', height);
-
-		}
-
+		var container = $('#waterfall');
+		
 	})
 
 	//scroll top
@@ -192,14 +175,13 @@ $(function(){
 
 	$(function(){
 		$(document).on('click', '.nav-tabs li', function(event) {
-			var childId = '#' + $(this).attr('data-url');
-			console.log(childId);
+			$(this).loadpage();
 			$(this).addClass('active').siblings('li').removeClass('active');
-			$('#loadContent .tabs').css('display', 'none');
-			$('#loadContent').find(childId).css('display', 'block');
 		});
-		$('.tabs-heading li:first').addClass('active');
-		$('#loadContent .tabs:first').css('display', 'block');
+		var init = function(){
+			$('.nav-tabs li:nth(0)').addClass('active').loadpage();
+		}
+		init();
 	})
 
 })

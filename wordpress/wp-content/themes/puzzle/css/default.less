@@ -67,8 +67,9 @@ input, textarea:focus {
 
 a {
 	text-decoration: none;
+    color: inherit;
 }
-
+a:visited { color: inherit; }
 a:focus, a:active { outline: none; }
 
 h1,h2,h3,h4,h5 {
@@ -199,44 +200,45 @@ header {
 }
 
 .content-wrapper {
+    position: relative;
     .main-content {
-        width: 945px;
-        // height: 500px;
-        // background-color: #f7f7f7;
-        float: left;
+        width: 100%;
+        min-height: 800px;
+        overflow: hidden;
         padding: 5px;
+        padding-right: 400px;
         position: relative;
         // height: 100%;
         .item-box {
-            position: absolute;
-            // left: 5px;
-            // top: 5px;
-            // width: 200px;
+            position: relative;
+            width: 225px;
+            float: left;
             margin: 5px;
             padding: 10px;
             background-color: #fff;
             border-radius: 5px;
             .item-caption {
                 margin-top: 10px;
-                height: 30px;
-                position: absolute;
-                bottom: 0;
-                left: 5px;
+                border-top: 1px solid #333;
+                position: relative;
                 li {
                     float: left;
                     width: 20px;
                     height: 20px;
                     line-height: 20px;
                     text-align: center;
+                    margin-top: 5px;
                 }
             }
         }
     }
     .side-content {
         width: 400px;
-        // height: 500px;
-        background-color: #e9e9e9;
-        float: left;
+        position: absolute;
+        right: 0;
+        top: 0;
+        // background-color: #e9e9e9;
+        // float: left;
         padding: 10px;
         .ranks {
             margin-bottom: 20px;
