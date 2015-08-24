@@ -105,30 +105,34 @@ if ( function_exists( 'add_theme_support' ) ) {
     add_theme_support( 'post-thumbnails' );
 }
 //抓取文章中的第一张图片
-function p2_catch_that_image() {
+function catch_first_image() {
 	global $post, $posts;
-	$first_img = '';
-	ob_start();
-	ob_end_clean();
-	$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', get_the_post_thumbnail($post->ID, 'large'), $matches);
-	$first_img = $matches [1] [0];
-	if(empty($first_img)){
-		$first_img = get_bloginfo('template_url') . '/i/default.jpg';
-	}
-	return $first_img;
+	$content = $post->post_content;  
+   
+    preg_match_all('/<img.*?(?: |\\t|\\r|\\n)?src=[\'"]?(.+?)[\'"]?(?:(?: |\\t|\\r|\\n)+.*?)?>/sim', $content, $strResult, PREG_PATTERN_ORDER);  
+
+    $n = count($strResult[1]);  
+
+    if($n > 0){ // 如果文章内包含有图片，就用第一张图片做为缩略图  
+        echo '<img src="'.$strResult[1][0].'" width="205" />';
+    } else {
+    	return;
+    }
 }
 
-function p2_catch_that_image_m() {
+function catch_three_image() {
 	global $post, $posts;
-	$first_img = '';
-	ob_start();
-	ob_end_clean();
-	$output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', get_the_post_thumbnail($post->ID, 'medium'), $matches);
-	$first_img = $matches [1] [0];
-	if(empty($first_img)){
-		$first_img = get_bloginfo('template_url') . '/i/default.jpg';
-	}
-	return $first_img;
+	$imgs = array();
+	$content = $post->post_content;  
+    preg_match_all('/<img.*?(?: |\\t|\\r|\\n)?src=[\'"]?(.+?)[\'"]?(?:(?: |\\t|\\r|\\n)+.*?)?>/sim', $content, $strResult, PREG_PATTERN_ORDER); 
+
+	$imgs[0] = $strResult [1] [0];
+	$imgs[1] = $strResult [1] [1];
+	$imgs[2] = $strResult [1] [2];
+	// if(empty($first_img)){
+	// 	$first_img = get_bloginfo('template_url') . '/i/default.jpg';
+	// }
+	return $imgs;
 }
 
 function mansu_comment($comment, $args, $depth) {

@@ -12,9 +12,10 @@
 ?>
 <div class="item-box">
 	<a href="<?php the_permalink(); ?>" target="_blank">
-		<?php if ( function_exists( 'the_post_thumbnail' ) ) { 
+		<?php if ( has_post_thumbnail() ) { 
         	the_post_thumbnail( array(205,205) ); 
-	     } ?>
+	     } else { catch_first_image(); } ?>
+	    <?php //catch_thumbnail(); ?>
 		<?php echo get_the_excerpt(); ?>
 	</a>
 	

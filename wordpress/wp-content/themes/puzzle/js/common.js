@@ -168,7 +168,14 @@ $(function(){
 			return index;
 		};
 		function resizeContainer() {
-			var index = getMin();
+			var t = arrTop[0];
+			var index = 0;
+			for(var i = 0; i < arrTop.length; i++) {
+				if (arrTop[i] > t) {
+					t = arrTop[i];
+					index = i;
+				};
+			}
 			var height = arrTop[index] + 150;
 			$('#waterfall').css('height', height);
 
