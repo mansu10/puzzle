@@ -15,19 +15,24 @@
 		    <div class="touchslider">
 		        <div class="touchslider-viewport" style="width:700;overflow:hidden;margin:0 auto;height:400px;">
 		            <div>
-		            	<?php 
-		            		$arr = catch_three_image();
-		            		for ($i=0; $i < count($arr); $i++) { 
+		            	<?php
+		            		//设定自定义图片
+		            		
+		            		$imgs = get_post_meta($post->ID, 'slider_img', $single=false);
+		            		if (empty($imgs)) {
+		            			update_post_meta($post->ID, 'slider_img', 'http://fpoimg.com/700x400?text=holder');
+		            		}
+		            		foreach ($imgs as $img) {
 		            		?>
 		            		<div class="touchslider-item">
-			                    <img src="<?php echo $arr[$i] ?>" alt="" width="700">
+			                    <img src="<?php echo $img ?>" alt="" width="700">
 			                </div>
 		            		<?php
 		            		}
 
 		            	 ?>
 		                <!-- <div class="touchslider-item">
-		                    <img src="http://fpoimg.com/700x400?text=First" alt="">
+		                    <img src="http://fpoimg.com/700x400?text=holder" alt="">
 		                </div>
 		                <div class="touchslider-item">
 		                    <img src="http://fpoimg.com/700x400?text=Second" alt="">
@@ -47,10 +52,6 @@
 		        </div>
 		    </div>
 		    <div class="description">
-		    	<?php the_content() ?>
-		    	<script type="text/javascript">
-		    		var reg = '/^<img.+/';
-		    	</script>
 		    </div>
 		</div>
 		<!-- reviews -->

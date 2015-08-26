@@ -36,6 +36,28 @@ if (is_admin()) {
 	add_action('admin_menu','removeMenus');
 }
 
+//清除dashboard小插件
+function remove_dashboard_widgets() {
+    // Globalize the metaboxes array, this holds all the widgets for wp-admin
+    global $wp_meta_boxes;
+    // 以下这一行代码将删除 "快速发布" 模块
+    // unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']);
+    // 以下这一行代码将删除 "引入链接" 模块
+    // unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);
+    // 以下这一行代码将删除 "插件" 模块
+    // unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins']);
+    // 以下这一行代码将删除 "近期评论" 模块
+    // unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_recent_comments']);
+    // 以下这一行代码将删除 "近期草稿" 模块
+    // unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']);
+    // 以下这一行代码将删除 "WordPress 开发日志" 模块
+    unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
+    // 以下这一行代码将删除 "其它 WordPress 新闻" 模块
+    // unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);
+    // 以下这一行代码将删除 "概况" 模块
+    // unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_right_now']);
+}
+add_action('wp_dashboard_setup', 'remove_dashboard_widgets' );
 //注册工具栏
 if (function_exists('register_sidebar')){
    register_sidebar(array(
@@ -120,21 +142,6 @@ function catch_first_image() {
     }
 }
 
-function catch_three_image() {
-	global $post, $posts;
-	$imgs = array();
-	$content = $post->post_content;  
-    preg_match_all('/<img.*?(?: |\\t|\\r|\\n)?src=[\'"]?(.+?)[\'"]?(?:(?: |\\t|\\r|\\n)+.*?)?>/sim', $content, $strResult, PREG_PATTERN_ORDER); 
-
-	$imgs[0] = $strResult [1] [0];
-	$imgs[1] = $strResult [1] [1];
-	$imgs[2] = $strResult [1] [2];
-	// if(empty($first_img)){
-	// 	$first_img = get_bloginfo('template_url') . '/i/default.jpg';
-	// }
-	return $imgs;
-}
-
 function mansu_comment($comment, $args, $depth) {
    $GLOBALS['comment'] = $comment;
    ?>
@@ -157,6 +164,27 @@ function mansu_comment($comment, $args, $depth) {
    <?php
 }
 
+//调用某段时间评论最多的文章
+function most_comm_posts($days=7, $nums=10) { //$days参数限制时间值，单位为‘天’，默认是7天；$nums是要显示文章数量
+	global $wpdb;
+	$today = date("Y-m-d H:i:s"); //获取今天日期时间
+	$daysago = date( "Y-m-d H:i:s", strtotime($today) - ($days * 24 * 60 * 60) );  //Today - $days
+	$result = $wpdb->get_results("SELECT comment_count, ID, post_title, post_date FROM $wpdb->posts WHERE post_date BETWEEN '$daysago' AND '$today' ORDER BY comment_count DESC LIMIT 0 , $nums");
+	$output = '';
+	if(empty($result)) {
+		$output = '<li>None data.</li>';
+	} else {
+		foreach ($result as $topten) {
+			$postid = $topten->ID;
+			$title = $topten->post_title;
+			$commentcount = $topten->comment_count;
+			if ($commentcount != 0) {
+				$output .= '<li><a href="'.get_permalink($postid).'" title="'.$title.'">'.$title.'</a> ('.$commentcount.')</li>';
+			}
+		}
+	}
+	echo $output;
+}
 
 ?>
 
