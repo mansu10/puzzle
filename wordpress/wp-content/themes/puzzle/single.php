@@ -23,7 +23,7 @@
 			</div>
 			<div class="inner-block">
 				<ul class="preference">
-					<li><i class="fa fa-heart"></i>like</li>
+					<li> <?php if( function_exists('zilla_likes') ) zilla_likes(); ?></li>
 					<li>own</li>
 					<li>share</li>
 					<li>add to list</li>

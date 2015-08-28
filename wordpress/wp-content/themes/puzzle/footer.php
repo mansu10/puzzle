@@ -35,6 +35,7 @@
 			legal information
 		</div>
 	</footer>
+    <?php wp_footer(); ?>
 </body>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/jquery-1.11.3.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/jquery.touchslider.js"></script>

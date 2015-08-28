@@ -12,7 +12,10 @@
 	<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/css/jqcloud.css">
 	<link rel="stylesheet/less" type="text/less" href="<?php bloginfo('template_url'); ?>/css/forum.less">
 	<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/less.js"></script>
+	<?php wp_head(); ?>
+
 </head>
+<?php flush(); ?>
 <body>
 
 	<header>
