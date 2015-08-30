@@ -22,14 +22,60 @@
 				
 			</div>
 			<div class="inner-block">
-				<ul class="preference">
-					<li> <?php if( function_exists('zilla_likes') ) zilla_likes(); ?></li>
-					<li><i class="fa fa-circle"></i>own</li>
+				<?php $admin_url=admin_url( 'admin-ajax.php' ); ?>
+
+				<ul class="preference" id="favorite-list">
+					<?php list_view(); ?>
+					<!-- <li data-cata="like"><i class="fa fa-heart-o"></i><span>喜欢</span></li>
+					<li data-cata="own"><i class="fa fa-circle-o"></i><span>拥有</span></li>
 					<li>
-						<i class="fa fa-share"></i>share
+						<i class="fa fa-share"></i><span>分享</span>
 					</li>
-					<li><i class="fa fa-list"></i><?php if (function_exists('wpfp_link')) { wpfp_link(); } ?></li>
+					<li data-cata="list"><i class="fa fa-list"></i><span>愿望单</span></li> -->
 				</ul>
+				<script type="text/javascript">
+					jQuery(document).ready(function($){
+						var cata;
+						var fav = $('#favorite-list');
+						fav.on('click', 'li', function(event) {
+							event.preventDefault();
+							cata = $(this).attr('data-cata');
+							var status;
+							$(this).hasClass('active') ? status=1 : status=0;
+							if (cata) {
+								sendData(cata, status);
+								switch(cata) {
+									case 'like':
+										$(this).find('>i').removeClass('fa-heart-o active').addClass('fa-heart active');
+										break;
+									case 'own' :
+										$(this).find('>i').removeClass('fa-circle-o active').addClass('fa-circle active');
+										break;
+									case 'list':
+										// $(this).find('>i').removeClass('class name')
+										break;
+									default:
+										break;
+								}
+							};
+						});
+
+						function sendData(el, status) {
+							var data={
+								action:'fav',
+								type: el,
+								status: status,
+								postid: <?php the_ID() ?>
+
+							};
+							$.post("<?php echo $admin_url;?>", data, function(res) {
+								// console.log("<?php the_ID() ?>");
+								// $('body').prepend(res);
+							});
+						}
+						
+					});
+				</script>
 			</div>
 			<div class="inner-block" id="label-cloud">
 				

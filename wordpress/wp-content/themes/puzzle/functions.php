@@ -148,6 +148,21 @@ function catch_first_image() {
     }
 }
 
+function default_slider_img() {
+	if (is_single()) {
+		global $post;
+		//设定自定义图片
+		$imgs = get_post_meta($post->ID, 'slider_img', $single=false);
+		if (empty($imgs)) {
+			for ($i=0; $i < 3; $i++) { 
+				add_post_meta($post->ID, 'slider_img', 'http://fpoimg.com/700x400?text=holder'.$i);
+			}
+		}		
+	}
+}
+// 在文章内容部分插入slider
+add_action("wp", "default_slider_img");
+
 function mansu_comment($comment, $args, $depth) {
    $GLOBALS['comment'] = $comment;
    ?>

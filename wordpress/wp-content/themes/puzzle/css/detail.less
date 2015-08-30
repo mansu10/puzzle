@@ -233,11 +233,32 @@
                     float: left;
                     width: 50%;
                     height: 50%;
-                    line-height: 115px;
+                    line-height: 156px;
                     display: block;
                     text-align: center;
                     vertical-align: middle;
                     cursor: pointer;
+                    position: relative;
+                    -moz-user-select:none; /*火狐*/
+                    -webkit-user-select:none; /*webkit浏览器*/
+                    -ms-user-select:none; /*IE10*/
+                    -khtml-user-select:none; /*早期浏览器*/
+                    user-select:none;
+                    .fa {
+                        font-size: 28px;
+                        left: 50%;
+                        top: 32px;
+                        margin-left: -14px;
+                        display: block;
+                        position: absolute;
+                        vertical-align: middle;
+                        &.fa-heart-o,&.fa-heart {
+                            color: #fd5a46;
+                        }
+                    }
+                    span {
+                        font-size: 14px;
+                    }
                     &:hover {
                        background-color: #eee; 
                     }
