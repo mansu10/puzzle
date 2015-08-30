@@ -10,7 +10,6 @@ remove_action('wp_head', 'feed_links_extra',3 );//清除feed信息
 remove_action('wp_head', 'wp_shortlink_wp_head',10,0 );
 
 require_once('control.php');
-require_once('favorite.php');
 
 // 移除不需要的菜单栏
 function removeMenus() {
@@ -36,34 +35,7 @@ function removeMenus() {
 if (is_admin()) {
 	add_action('admin_menu','removeMenus');
 }
-/* 
- * 只在前台隐藏工具条
- */  
-if ( !is_admin() ) {  
-    add_filter('show_admin_bar', '__return_false'); 
-}
-//清除dashboard小插件
-function remove_dashboard_widgets() {
-    // Globalize the metaboxes array, this holds all the widgets for wp-admin
-    global $wp_meta_boxes;
-    // 以下这一行代码将删除 "快速发布" 模块
-    // unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']);
-    // 以下这一行代码将删除 "引入链接" 模块
-    // unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);
-    // 以下这一行代码将删除 "插件" 模块
-    // unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins']);
-    // 以下这一行代码将删除 "近期评论" 模块
-    // unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_recent_comments']);
-    // 以下这一行代码将删除 "近期草稿" 模块
-    // unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']);
-    // 以下这一行代码将删除 "WordPress 开发日志" 模块
-    unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
-    // 以下这一行代码将删除 "其它 WordPress 新闻" 模块
-    // unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);
-    // 以下这一行代码将删除 "概况" 模块
-    // unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_right_now']);
-}
-add_action('wp_dashboard_setup', 'remove_dashboard_widgets' );
+
 //注册工具栏
 if (function_exists('register_sidebar')){
    register_sidebar(array(
@@ -113,12 +85,12 @@ function change_footer_version() {return '';}
 add_filter( 'update_footer', 'change_footer_version', 9999);
 
 //屏蔽左上logo
-function annointed_admin_bar_remove() {
-        global $wp_admin_bar;
-        /* Remove their stuff */
-        $wp_admin_bar->remove_menu('wp-logo');
-}
-add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
+// function annointed_admin_bar_remove() {
+//         global $wp_admin_bar;
+//         /* Remove their stuff */
+//         $wp_admin_bar->remove_menu('wp-logo');
+// }
+// add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
 
 //excerpt被用作在首页上简略的文章信息
 //此处设定显示的字符数
@@ -148,6 +120,21 @@ function catch_first_image() {
     }
 }
 
+function catch_three_image() {
+	global $post, $posts;
+	$imgs = array();
+	$content = $post->post_content;  
+    preg_match_all('/<img.*?(?: |\\t|\\r|\\n)?src=[\'"]?(.+?)[\'"]?(?:(?: |\\t|\\r|\\n)+.*?)?>/sim', $content, $strResult, PREG_PATTERN_ORDER); 
+
+	$imgs[0] = $strResult [1] [0];
+	$imgs[1] = $strResult [1] [1];
+	$imgs[2] = $strResult [1] [2];
+	// if(empty($first_img)){
+	// 	$first_img = get_bloginfo('template_url') . '/i/default.jpg';
+	// }
+	return $imgs;
+}
+
 function mansu_comment($comment, $args, $depth) {
    $GLOBALS['comment'] = $comment;
    ?>
@@ -161,7 +148,9 @@ function mansu_comment($comment, $args, $depth) {
 				<p><?php comment_text(); ?></p>
 			</section>
 			<footer>
+
 				<span><?php echo get_comment_time('Y-m-d H:i'); ?></span>
+				<span><a href="<?php echo get_option('siteurl'); ?>/wp-comments-post.php"?$post->ID> 回复 </a></span>
 				<span class="fa fa-share-alt"></span>
 				<span class="fa fa-thumbs-up"></span>
 			</footer>
@@ -170,31 +159,8 @@ function mansu_comment($comment, $args, $depth) {
    <?php
 }
 
-//调用某段时间评论最多的文章
-function most_comm_posts($days=7, $nums=10) { //$days参数限制时间值，单位为‘天’，默认是7天；$nums是要显示文章数量
-	global $wpdb;
-	$today = date("Y-m-d H:i:s"); //获取今天日期时间
-	$daysago = date( "Y-m-d H:i:s", strtotime($today) - ($days * 24 * 60 * 60) );  //Today - $days
-	$result = $wpdb->get_results("SELECT comment_count, ID, post_title, post_date FROM $wpdb->posts WHERE post_date BETWEEN '$daysago' AND '$today' ORDER BY comment_count DESC LIMIT 0 , $nums");
-	$output = '';
-	if(empty($result)) {
-		$output = '<li>None data.</li>';
-	} else {
-		foreach ($result as $topten) {
-			$postid = $topten->ID;
-			$title = $topten->post_title;
-			$commentcount = $topten->comment_count;
-			if ($commentcount != 0) {
-				$output .= '<li><a href="'.get_permalink($postid).'" title="'.$title.'">'.$title.'</a> ('.$commentcount.')</li>';
-			}
-		}
-	}
-	echo $output;
-}
 
-?>
 
-<?php
 
 if ( ! function_exists( 'twentyeleven_comment' ) ) :
 /**
@@ -218,10 +184,9 @@ function twentyeleven_comment( $comment, $args, $depth ) {
 		case 'trackback' :
 	?>
 	<li class="post pingback">
-
 		<p><?php _e( 'Pingback:', 'twentyeleven' ); ?> <?php comment_author_link(); ?><?php edit_comment_link( __( 'Edit', 'twentyeleven' ), '<span class="edit-link">', '</span>' ); ?></p>
 	<?php
-		break;
+			break;
 		default :
 	?>
 	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
@@ -229,7 +194,7 @@ function twentyeleven_comment( $comment, $args, $depth ) {
 			<footer class="comment-meta">
 				<div class="comment-author vcard">
 					<?php
-						$avatar_size = 58;
+						$avatar_size = 68;
 						if ( '0' != $comment->comment_parent )
 							$avatar_size = 39;
 
@@ -247,7 +212,7 @@ function twentyeleven_comment( $comment, $args, $depth ) {
 						);
 					?>
 
-				<!-- 	<?php edit_comment_link( __( 'Edit', 'twentyeleven' ), '<span class="edit-link">', '</span>' ); ?> -->
+					<?php edit_comment_link( __( 'Edit', 'twentyeleven' ), '<span class="edit-link">', '</span>' ); ?>
 				</div><!-- .comment-author .vcard -->
 
 				<?php if ( $comment->comment_approved == '0' ) : ?>

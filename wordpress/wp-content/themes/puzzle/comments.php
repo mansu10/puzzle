@@ -1,37 +1,90 @@
 <?php
-    if (isset($_SERVER['SCRIPT_FILENAME']) && 'comments.php' == basename($_SERVER['SCRIPT_FILENAME']))
-        die ('Please do not load this page directly. Thanks!');
+/**
+ * Template for displaying Comments
+ *
+ * The area of the page that contains both current comments
+ * and the comment form. The actual display of comments is
+ * handled by a callback to twentyeleven_comment() which is
+ * located in the functions.php file.
+ *
+ * @package WordPress
+ * @subpackage Twenty_Eleven
+ * @since Twenty Eleven 1.0
+ */
 ?>
+	<div id="comments">
+	<?php if ( post_password_required() ) : ?>
+		<p class="nopassword"><?php _e( 'This post is password protected. Enter the password to view any comments.', 'twentyten'  ); ?></p>
+	</div><!-- #comments -->
+	<?php
+			/*
+			 * Stop the rest of comments.php from being processed,
+			 * but don't kill the script entirely -- we still have
+			 * to fully load the template.
+			 */
+			return;
+		endif;
+	?>
 
-<form name="commentform" action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method="post">
-	<div><textarea name="comment" rows="5" placeholder="write comments"></textarea></div>
-	<div><button onClick="Javascript:document.forms['commentform'].submit()"  class="btn pull-right">submit</button></div>
-    <?php comment_id_fields(); ?>
-    <?php do_action('comment_form', $post->ID); ?>	
-</form>
+	<?php // You can start editing here -- including this comment! ?>
 
-<?php 
-    if (!empty($post->post_password) && $_COOKIE['wp-postpass_' . COOKIEHASH] != $post->post_password) { 
-        // if there's a password
-        // and it doesn't match the cookie
-    ?>
-    <li class="decmt-box">
-        <p><a href="#addcomment">请输入密码再查看评论内容.</a></p>
-    </li>
-    <?php 
-        } else if ( !comments_open() ) {
-    ?>
-    <li class="decmt-box">
-        <p><a href="#addcomment">评论功能已经关闭!</a></p>
-    </li>
-    <?php 
-        } else if ( !have_comments() ) { 
-    ?>
-    <li class="decmt-box">
-        <p><a href="#addcomment">还没有任何评论，你来说两句吧</a></p>
-    </li>
-    <?php 
-        } else {
-            wp_list_comments('type=comment&callback=mansu_comment');
-        }
-    ?>
+	    <?php 
+	    if ( have_comments() ) : ?>
+		<h2 id="comments-title">
+			<?php
+			//获取评论顺序编号，
+				printf( _n( '只有一条评论 on &ldquo;%2$s&rdquo;', '%1$s 评论 on &ldquo;%2$s&rdquo;', get_comments_number() ),
+					number_format_i18n( get_comments_number() ), '<span>' . get_the_title() . '</span>' );
+		?>
+		</h2>
+
+		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // are there comments to navigate through ?>
+		<nav id="comment-nav-above">
+			<h1 class="assistive-text"><?php _e( 'Comment navigation', 'twentyeleven' ); ?></h1>
+			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'twentyeleven' ) ); ?></div>
+			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'twentyeleven' ) ); ?></div>
+		</nav>
+		<?php endif; // check for comment navigation ?>
+
+		<ol class="commentlist">
+			<?php
+				/*
+				 * Loop through and list the comments. Tell wp_list_comments()
+				 * to use twentyeleven_comment() to format the comments.
+				 * If you want to overload this in a child theme then you can
+				 * define twentyeleven_comment() and that will be used instead.
+				 * See twentyeleven_comment() in twentyeleven/functions.php for more.
+				 */
+
+				wp_list_comments( array( 'callback' => 'twentyeleven_comment',
+				                         'avatar_size'=>32,
+				                         'short_ping'=>true ));
+			?>
+		</ol> 
+		
+
+		<?php 
+		if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // are there comments to navigate through ?>
+		<nav id="comment-nav-below">
+			<h1 class="assistive-text"><?php _e( 'Comment navigation', 'twentyeleven' ); ?></h1>
+			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'twentyeleven' ) ); ?></div>
+			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'twentyeleven' ) ); ?></div>
+		</nav>
+		<?php 
+		endif; // check for comment navigation 
+		?>
+
+		<?php
+		/*
+		 * If there are no comments and comments are closed, let's leave a little note, shall we?
+		 * But we only want the note on posts and pages that had comments in the first place.
+		 */
+		if ( ! comments_open() && get_comments_number() ) : ?>
+		<p class="nocomments"><?php _e( 'Comments are closed.' , 'twentyeleven' ); ?></p>
+		<?php endif; ?>
+
+	<?php endif; // have_comments() ?>
+
+	<?php comment_form(); ?>
+
+</div><!-- #comments -->
