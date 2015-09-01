@@ -20,9 +20,9 @@
 	</a>
 	
 	<ul class="item-caption">
-		<li><span class="fa fa-heart"></span></li>
-		<li><span class="fa fa-share"></span></li>
-		<li><span class="fa fa-star"></span></li>
+		<li> share </li>
+		<li> share </li>
+		<li> share </li>
 	</ul>
 </div>
 

@@ -25,7 +25,14 @@
 				<?php $admin_url=admin_url( 'admin-ajax.php' ); ?>
 
 				<ul class="preference" id="favorite-list">
-					<?php list_view(); ?>
+					<?php
+					 $postid = get_the_ID();
+					 list_view($postid); 
+					 $check = is_user_logged_in();
+					 if (!$check) {
+					 	$check = 0;
+					 }
+					 ?>
 					<!-- <li data-cata="like"><i class="fa fa-heart-o"></i><span>喜欢</span></li>
 					<li data-cata="own"><i class="fa fa-circle-o"></i><span>拥有</span></li>
 					<li>
@@ -36,42 +43,38 @@
 				<script type="text/javascript">
 					jQuery(document).ready(function($){
 						var cata;
+						var check = <?php echo $check; ?>;
+						
 						var fav = $('#favorite-list');
 						fav.on('click', 'li', function(event) {
 							event.preventDefault();
 							cata = $(this).attr('data-cata');
-							var status;
-							$(this).hasClass('active') ? status=1 : status=0;
-							if (cata) {
-								sendData(cata, status);
-								switch(cata) {
-									case 'like':
-										$(this).find('>i').removeClass('fa-heart-o active').addClass('fa-heart active');
-										break;
-									case 'own' :
-										$(this).find('>i').removeClass('fa-circle-o active').addClass('fa-circle active');
-										break;
-									case 'list':
-										// $(this).find('>i').removeClass('class name')
-										break;
-									default:
-										break;
-								}
+							if (cata&&(check == 1)) {
+								sendData(cata);
+							} else {
+								alert('log in please!');
+								return;
 							};
+							$(this).find('>i').removeClass().addClass('fa fa-spinner fa-spin');
+							// console.log(check);
+							// console.log(typeof(check));
+
 						});
 
-						function sendData(el, status) {
+						function sendData(el) {
 							var data={
 								action:'fav',
 								type: el,
-								status: status,
+								// status: status,
 								postid: <?php the_ID() ?>
 
 							};
-							$.post("<?php echo $admin_url;?>", data, function(res) {
+							$.post("<?php echo $admin_url;?>", data, function(res, status) {
 								// console.log("<?php the_ID() ?>");
 								// $('body').prepend(res);
-							});
+								var fav = $('#favorite-list');
+								fav.html(res);
+							});							
 						}
 						
 					});

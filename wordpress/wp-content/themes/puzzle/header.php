@@ -27,7 +27,23 @@
 		</ul>
 		
 		<div class="user-wrapper">
+			<?php if (is_user_logged_in()) { 
+				global $current_user;
+				get_currentuserinfo();
+
+			?>
+			<div class="logged">
+				<a href="" ><?php echo $current_user->display_name ?></a>
+				<ul class="op-box">
+					<li><a href="">编辑资料</a></li>
+					<li><a href="">退出</a></li>
+				</ul>
+			</div>
+				
+
+			 <?php } else { ?>
 			<div><a href="<?php bloginfo('url'); ?>/wp-login.php">登录</a></div>
 			<div><a href="<?php bloginfo('url'); ?>/wp-login.php?action=register" target="_blank">注册</a></div>
+			<?php } ?>
 		</div>
 	</header>

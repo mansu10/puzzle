@@ -14,7 +14,9 @@
  |                                                                |
  |----------------------------------------------------------------|
 */
-
+@base:#ebeced;
+@head:#057871;
+@headhover:#1e433b;
 /********** 1. IMPORT FILES **********/
 /*************************************/
 
@@ -39,7 +41,7 @@ body {
     font-family: '微软雅黑','LatoRegular', 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, sans-serif !important;
     line-height: 21px;
     color: #636e7b;
-    background-color: #ebeced;
+    background-color: @base;
 }
 
 body.notfound,
@@ -124,36 +126,72 @@ textarea {
 
 
 header {
-    height: 50px;
+    height: 35px;
     padding: 0 50px;
-    background-color: #bfbfbf;
+    background-color: @head;
+    border-bottom: 1px solid #888;
+    color: #fff;
+    font-size: 14px;
     .logo {
-        height: 50px;
-        line-height: 50px;
+        height: 35px;
+        line-height: 35px;
         text-align: center;
         float: left;
     }
     .nav {
         float: left;
-        line-height: 50px;
+        line-height: 35px;
         margin-left: 50px;
         li {
             float: left;
-            height: 50px;
+            height: 35px;
             padding: 0 10px;
             &:hover {
                 cursor: pointer;
-                background-color: #999;
+                background-color: @headhover;
                 color: #fff;
             }
         }
     }
     .user-wrapper {
-        float: right;
-        line-height: 50px;
+        position: absolute;
+        right: 0px;
+        padding-right: 10px;
+        line-height: 35px;
         div {
             float: left;
             padding: 0 10px;
+        }
+        .logged {
+            .op-box {
+                background-color: #eee;
+                border-radius: 0 0 0 5px;
+
+                z-index: 999;
+                position: absolute;
+                right: 0;
+                font-size: 14px;
+                width: 150px;
+                -moz-transition: height .5s;
+                -o-transition: height .5s;
+                -webkit-transition: height .5s;
+                transition: height .5s;
+                height: 0;
+                overflow: hidden;
+                li {
+                    padding: 10px;
+                    line-height: 20px;
+                    color: #333;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: @headhover;
+                        color: #fff;
+                    }
+                }
+            }
+            &:hover .op-box {
+                height: 80px;
+            }
         }
     }
     &::after {
@@ -223,11 +261,12 @@ header {
                 position: relative;
                 li {
                     float: left;
-                    width: 20px;
+                    // width: 20px;
                     height: 20px;
                     line-height: 20px;
                     text-align: center;
                     margin-top: 5px;
+                    padding-right: 10px;
                 }
             }
         }
@@ -256,7 +295,7 @@ footer {
     .contact {
         padding: 50px 70px;
         height: 350px;
-        background-color: #888;
+        background-color: @headhover;
         color: #fff;
         div {
             width: 33.333%;
@@ -268,7 +307,7 @@ footer {
     }
     .legal {
         color: #fff;
-        background-color: #888;
+        background-color: @headhover;
         text-align: center;
     }
 }
