@@ -9,7 +9,7 @@
 
 get_header(); ?>
 <?php if ( is_bbpress() ) : ?>
-	<div class="forum-wrapper">
+<!-- 	<div class="forum-wrapper">
 		<section class="board">
 			<div class="forum-title">
 				<span class="fa fa-star"></span>
@@ -17,13 +17,15 @@ get_header(); ?>
 			</div>
 		</section>
 		<section class="plates">
-			<div class="forum-title"><span class="fa fa-star"></span>论坛板块</div>
+			<div class="forum-title"><span class="fa fa-star"></span>论坛板块</div> -->
+			<div id="bbpress-forums">
 			<?php get_template_part('loop', 'forums'); ?>
-		</section>
+			</div>
+<!-- 		</section>
 		<section class="member-info">
 			<div class="forum-title"><span class="fa fa-star"></span>something like total members, activies members</div>
 			
 		</section>
-	</div>
+	</div> -->
 <?php endif ?>
 <?php get_footer(); ?>

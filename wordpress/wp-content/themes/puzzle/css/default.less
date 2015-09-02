@@ -104,6 +104,23 @@ textarea {
     border: 1px solid #ddd;
     padding: 5px;
 }
+/*Alignment*/
+.alignleft {
+   display:inline;
+   float:left;
+   margin-right:1.625em;
+}
+.alignright {
+   display:inline;
+   float:right;
+   margin-left:1.625em;
+}
+.aligncenter {
+   clear:both;
+   display:block;
+   margin-left:auto;
+   margin-right:auto;
+}
 /********** 2. Left Panel ************/
 /*************************************/
 
@@ -166,12 +183,12 @@ header {
             .op-box {
                 background-color: #eee;
                 border-radius: 0 0 0 5px;
-
+                text-align: center;
                 z-index: 999;
                 position: absolute;
                 right: 0;
                 font-size: 14px;
-                width: 150px;
+                width: 120px;
                 -moz-transition: height .5s;
                 -o-transition: height .5s;
                 -webkit-transition: height .5s;
@@ -246,6 +263,7 @@ header {
         padding: 5px;
         padding-right: 400px;
         position: relative;
+        font-size: 14px;
         // height: 100%;
         .item-box {
             position: relative;

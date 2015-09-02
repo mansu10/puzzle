@@ -123,7 +123,7 @@ add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
 //excerpt被用作在首页上简略的文章信息
 //此处设定显示的字符数
 function new_excerpt_length($length) {
-    return 100;
+    return 40;
 }
 add_filter('excerpt_length', 'new_excerpt_length');
 

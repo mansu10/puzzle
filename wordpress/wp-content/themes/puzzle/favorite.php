@@ -133,14 +133,49 @@ function fav_list_pages() {
 }
 function like_list() {
 	$fav_like = new DisplayFavList();
-	$fav_like->prepare_items();
+	$fav_like->prepare_items('like'); ?>
+	<div class="wrap">
+		<h2>喜欢列表</h2>
+		<form method="post">
+			<input type="hidden" name="page" value="">
+			<?php $fav_like->search_box('搜索', 'search_id'); ?>
+		
+			<?php $fav_like->display(); ?>
+		</form>
+		
+	</div>
+<?php	
 }
 function want_list() {
-
-    echo "first";
+	$fav_list = new DisplayFavList();
+	$fav_list->prepare_items('list'); ?>
+	<div class="wrap">
+		<h2>愿望单</h2>
+		<form method="post">
+			<input type="hidden" name="page" value="">
+			<?php $fav_list->search_box('搜索', 'search_id'); ?>
+		
+			<?php $fav_list->display(); ?>
+		</form>
+		
+	</div>
+<?php
 }
 function own_list() {
-	echo "string";
+	$fav_own = new DisplayFavList();
+	$fav_own->prepare_items('own'); ?>
+	<div class="wrap">
+		<h2>拥有列表</h2>
+		<form method="post">
+			<input type="hidden" name="page" value="">
+			<?php $fav_own->search_box('搜索', 'search_id'); ?>
+		
+			<?php $fav_own->display(); ?>
+		</form>
+		
+	</div>
+<?php
+
 }
 add_action('admin_menu', 'fav_list_pages');
 
@@ -153,12 +188,22 @@ if ( !class_exists('WP_List_Table')) {
 }
 class DisplayFavList extends WP_List_Table 
 {
+	var $configMap = array(
+		'total_items' => 1
+	);
 	
-	public function prepare_items() {
+	public function prepare_items($param) {
 		$columns = $this->get_columns();
 		$hidden = $this->get_hidden_columns();
 		$sortable = $this->get_sortable_columns();
-		$data = $this->table_data();
+		$data = $this->table_data($param);
+
+		$current_page = $this->get_pagenum();
+		$this->set_pagination_args( array(
+			'total_items' => $this->configMap['total_items'],
+			'per_page'    => 10
+		) );
+
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 		$this->items = $data;
 	}
@@ -168,8 +213,8 @@ class DisplayFavList extends WP_List_Table
 		$columns = array(
 			'cb'      => '<input type="checkbox" />',
 			'id'      => '序号',
-			'postid'   => '文章ID',
-			'name'    => '文章名'	
+			'title'   => '文章名',
+			'url'	  => '查看'
 		);
 		return $columns;
 	}
@@ -192,15 +237,88 @@ class DisplayFavList extends WP_List_Table
         	'id'   => array('id', false)
         );
     }
+
+/**
+	* 添加全选功能
+	*
+	* @return String
+	*/ 
+	public function column_cb($item){
+		return sprintf(
+			'<input type="checkbox" name="person[]" value="%s"', $item['id']
+		);
+	}
+
+/**
+	* get_bulk_actions
+	*
+	* @return Array
+	*/ 	
+	public function get_bulk_actions(){
+		$actions = array(
+			'delete'    => '删除'
+		);
+		return $actions;
+	}
+
 /**
 	* 数据库中获取数据
 	*
 	* @return Array
 	*/
-    public function table_data(){
-		global $wpdb;
-		$data = array('1','2','3');
+    public function table_data($param){
+    	global $wpdb;
+		global $current_user;
+		$table_name = $wpdb->prefix.'favorite';
+		$table_post = $wpdb->prefix.'posts';
+		get_currentuserinfo();
+		$userid = $current_user->ID;
+    	$result = $wpdb->get_results("SELECT * FROM $table_name WHERE userid='$userid' AND meta_key='$param'");
+    	$this->configMap['total_items'] = count($result);
+    	// $data = object_to_array($result);
+    	// echo var_dump($data);
+    	// echo var_dump($result);
+    	$data = array();
+    	for ($i=0; $i < count($result); $i++) { 
+    		$item = array();
+	    	foreach ($result[$i] as $key => $value) {
+	    		
+	    		if ($key == 'postid') {
+	    			$post_detail = $wpdb->get_row("SELECT guid,post_title FROM $table_post WHERE ID='$value'");
+	    			// echo $post_detail['guid'];
+	    			$item['url'] = $post_detail->{'guid'};
+	    			$item['title'] = $post_detail->{'post_title'};
+	    			// echo var_dump($item);
+	    		}
+	    		$item['id'] = $i+1;
+	    	}
+	    	array_push($data, $item);
+    	}
+    	// echo var_dump($data);
     	return $data;
-    }    	
+    }
+
+/**
+	* 定义每列所呈现的数据
+	*
+	* @param Array $item Data
+	* @param String $column_name Current column name
+	*
+	* @return Mixed
+	*/ 
+	public function column_default( $item, $column_name ){
+		switch ( $column_name ) {
+			case 'id':
+			case 'title':
+				return $item[ $column_name ];
+			case 'url':
+				return '<a href="'.$item[ $column_name ].'" alt="查看详细">查看详细</a>';
+			default:
+				return print_r( $item, true );
+		}
+	}
+// 删除功能
+// 升降序
 }
+
  ?>
