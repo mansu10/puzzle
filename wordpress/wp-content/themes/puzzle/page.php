@@ -7,7 +7,6 @@
  * @since Twenty Fifteen 1.0
  */
 
-<<<<<<< HEAD
  get_header(); ?>
 
 	<div id="primary">
@@ -24,8 +23,6 @@
 
 			</div><!-- #content -->
 		</div><!-- #primary -->
-=======
-get_header(); ?>
 <?php if ( is_bbpress() ) : ?>
 <!-- 	<div class="forum-wrapper">
 		<section class="board">
@@ -46,5 +43,5 @@ get_header(); ?>
 		</section>
 	</div> -->
 <?php endif ?>
->>>>>>> f427a1cb7bd8339d0284af13c4f85c65d41124c6
+
 <?php get_footer(); ?>

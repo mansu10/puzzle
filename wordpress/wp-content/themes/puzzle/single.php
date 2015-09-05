@@ -22,13 +22,6 @@
 				
 			</div>
 			<div class="inner-block">
-<<<<<<< HEAD
-				<ul class="preference">
-					<li> <?php if( function_exists('zilla_likes') ) zilla_likes(); ?></li>
-					<li>own</li>
-					<li>share</li>
-					<li>add to list</li>
-=======
 				<?php $admin_url=admin_url( 'admin-ajax.php' ); ?>
 
 				<ul class="preference" id="favorite-list">
@@ -46,7 +39,6 @@
 						<i class="fa fa-share"></i><span>分享</span>
 					</li>
 					<li data-cata="list"><i class="fa fa-list"></i><span>愿望单</span></li> -->
->>>>>>> f427a1cb7bd8339d0284af13c4f85c65d41124c6
 				</ul>
 				<script type="text/javascript">
 					jQuery(document).ready(function($){

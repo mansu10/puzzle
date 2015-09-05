@@ -27,9 +27,6 @@
 		</ul>
 		
 		<div class="user-wrapper">
-<<<<<<< HEAD
-			<div><a href="./wp-login.php">登录</a></div>
-=======
 			<?php if (is_user_logged_in()) { 
 				global $current_user;
 				get_currentuserinfo();
@@ -38,15 +35,14 @@
 			<div class="logged">
 				<a href="" ><?php echo $current_user->display_name ?></a>
 				<ul class="op-box">
-					<li><a href="">编辑资料</a></li>
-					<li><a href="">退出</a></li>
+					<li><a href="<?php bloginfo('url'); ?>/wp-admin/profile.php">编辑资料</a></li>
+					<li><a href="<?php bloginfo('url'); ?>/wp-login.php?action=logout">退出</a></li>
 				</ul>
 			</div>
 				
 
 			 <?php } else { ?>
 			<div><a href="<?php bloginfo('url'); ?>/wp-login.php">登录</a></div>
->>>>>>> f427a1cb7bd8339d0284af13c4f85c65d41124c6
 			<div><a href="<?php bloginfo('url'); ?>/wp-login.php?action=register" target="_blank">注册</a></div>
 			<?php } ?>
 		</div>
