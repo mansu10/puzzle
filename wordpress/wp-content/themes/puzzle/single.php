@@ -24,11 +24,9 @@
 			<div class="inner-block">
 				<ul class="preference">
 					<li> <?php if( function_exists('zilla_likes') ) zilla_likes(); ?></li>
-					<li><i class="fa fa-circle"></i>own</li>
-					<li>
-						<i class="fa fa-share"></i>share
-					</li>
-					<li><i class="fa fa-list"></i><?php if (function_exists('wpfp_link')) { wpfp_link(); } ?></li>
+					<li>own</li>
+					<li>share</li>
+					<li>add to list</li>
 				</ul>
 			</div>
 			<div class="inner-block" id="label-cloud">

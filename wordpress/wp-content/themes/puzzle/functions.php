@@ -10,7 +10,6 @@ remove_action('wp_head', 'feed_links_extra',3 );//清除feed信息
 remove_action('wp_head', 'wp_shortlink_wp_head',10,0 );
 
 require_once('control.php');
-require_once('favorite.php');
 
 // 移除不需要的菜单栏
 function removeMenus() {
@@ -36,12 +35,7 @@ function removeMenus() {
 if (is_admin()) {
 	add_action('admin_menu','removeMenus');
 }
-/* 
- * 只在前台隐藏工具条
- */  
-if ( !is_admin() ) {  
-    add_filter('show_admin_bar', '__return_false'); 
-}
+
 //清除dashboard小插件
 function remove_dashboard_widgets() {
     // Globalize the metaboxes array, this holds all the widgets for wp-admin
@@ -113,12 +107,12 @@ function change_footer_version() {return '';}
 add_filter( 'update_footer', 'change_footer_version', 9999);
 
 //屏蔽左上logo
-function annointed_admin_bar_remove() {
-        global $wp_admin_bar;
-        /* Remove their stuff */
-        $wp_admin_bar->remove_menu('wp-logo');
-}
-add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
+// function annointed_admin_bar_remove() {
+//         global $wp_admin_bar;
+//         /* Remove their stuff */
+//         $wp_admin_bar->remove_menu('wp-logo');
+// }
+// add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
 
 //excerpt被用作在首页上简略的文章信息
 //此处设定显示的字符数

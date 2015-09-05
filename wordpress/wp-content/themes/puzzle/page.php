@@ -7,23 +7,20 @@
  * @since Twenty Fifteen 1.0
  */
 
-get_header(); ?>
-<?php if ( is_bbpress() ) : ?>
-	<div class="forum-wrapper">
-		<section class="board">
-			<div class="forum-title">
-				<span class="fa fa-star"></span>
-				公告，人气贴，？
-			</div>
-		</section>
-		<section class="plates">
-			<div class="forum-title"><span class="fa fa-star"></span>论坛板块</div>
-			<?php get_template_part('loop', 'forums'); ?>
-		</section>
-		<section class="member-info">
-			<div class="forum-title"><span class="fa fa-star"></span>something like total members, activies members</div>
-			
-		</section>
-	</div>
-<?php endif ?>
+ get_header(); ?>
+
+	<div id="primary">
+
+			<div id="content" role="main">
+             
+				<?php while ( have_posts() ) : the_post(); ?>
+
+					<?php get_template_part( 'content1', 'page' ); ?>
+
+					<?php comments_template( '', true ); ?>
+
+				<?php endwhile; // end of the loop. ?>
+
+			</div><!-- #content -->
+		</div><!-- #primary -->
 <?php get_footer(); ?>
