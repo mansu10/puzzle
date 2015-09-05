@@ -18,11 +18,6 @@
 		            	<?php
 		            		//设定自定义图片
 		            		$imgs = get_post_meta($post->ID, 'slider_img', $single=false);
-		            		if (empty($imgs)) {
-		            			 
-		            			update_post_meta($post->ID, 'slider_img', 'http://fpoimg.com/700x400?text=holder'.$i);
-		            			
-		            		}
 		            		foreach ($imgs as $img) {
 		            		?>
 		            		<div class="touchslider-item">

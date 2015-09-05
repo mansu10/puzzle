@@ -41,16 +41,16 @@ if (is_admin()) {
  */ 
 function contentManage(){
 	add_menu_page(
-			'内容管理',			//页面title
-			'内容管理',			//菜单名称
-			'administrator',	//菜单权限
+			'收藏管理',			//页面title
+			'收藏管理',			//菜单名称
+			10,	//菜单权限
 			'contentManage',	//地址栏名
 			'indexManageView',	//回调函数
 			'',					//图片参数
 			9					//菜单放置位置
 		);
 	//添加子菜单
-	add_submenu_page('contentManage','主页管理','主页管理',8,'contentManage','indexManageView');
+	add_submenu_page('contentManage','喜欢列表','主页管理',8,'contentManage','indexManageView');
 	add_submenu_page('contentManage','详情页管理','详情页管理',8,'detail_manage','detailManageView');
 }
 

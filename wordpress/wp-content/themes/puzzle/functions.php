@@ -117,7 +117,7 @@ add_filter( 'update_footer', 'change_footer_version', 9999);
 //excerpt被用作在首页上简略的文章信息
 //此处设定显示的字符数
 function new_excerpt_length($length) {
-    return 100;
+    return 40;
 }
 add_filter('excerpt_length', 'new_excerpt_length');
 
@@ -141,6 +141,21 @@ function catch_first_image() {
     	return;
     }
 }
+
+function default_slider_img() {
+	if (is_single()) {
+		global $post;
+		//设定自定义图片
+		$imgs = get_post_meta($post->ID, 'slider_img', $single=false);
+		if (empty($imgs)) {
+			for ($i=0; $i < 3; $i++) { 
+				add_post_meta($post->ID, 'slider_img', 'http://fpoimg.com/700x400?text=holder'.$i);
+			}
+		}		
+	}
+}
+// 在文章内容部分插入slider
+add_action("wp", "default_slider_img");
 
 function mansu_comment($comment, $args, $depth) {
    $GLOBALS['comment'] = $comment;

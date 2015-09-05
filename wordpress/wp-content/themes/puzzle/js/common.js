@@ -148,7 +148,7 @@ $(function(){
 
 		function setCols() {
 			configMap.icols = Math.floor($container.width()/configMap.iWidth);
-			console.log(configMap.icols);
+			// console.log(configMap.icols);
 			if (configMap.icols < 2) {
 				configMap.icols = 2;
 			} else if (configMap.icols > 5) {
