@@ -10,7 +10,7 @@ remove_action('wp_head', 'feed_links_extra',3 );//清除feed信息
 remove_action('wp_head', 'wp_shortlink_wp_head',10,0 );
 
 require_once('control.php');
-
+require_once('favorite.php');
 // 移除不需要的菜单栏
 function removeMenus() {
 	global $menu;
@@ -76,7 +76,12 @@ register_nav_menus(
 	'nav-menu' => __( '主导航' )
 ));
 
-
+/* 
+ * 只在前台隐藏工具条
+ */  
+if ( !is_admin() ) {  
+    add_filter('show_admin_bar', '__return_false'); 
+}
 //禁用更新提示
 add_filter('pre_site_transient_update_core',    create_function('$a', "return null;")); // 关闭核心提示
 

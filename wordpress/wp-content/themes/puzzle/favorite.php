@@ -30,11 +30,14 @@ class Favorite
 		global $wpdb;
 		$table_name = $wpdb->prefix.'favorite';
 		$userid = $this->get_user_id();
+		date_default_timezone_set('PRC');
+		$date = date('Y-m-d H:i:s', time());
 		$dbvalue = array();
 
 		$dbvalue['userid'] = $userid;
 		$dbvalue['postid'] = $postid;
 		$dbvalue['meta_key'] = $data;
+		$dbvalue['post_date'] = $date;
 
 		$check = $wpdb->get_var("SELECT count(*) FROM $table_name WHERE meta_key='$data' AND postid='$postid' AND userid='$userid'" );
 		if ($check > 0) {
@@ -74,6 +77,7 @@ function create_db_table() {
 			postid bigint(20) NOT NULL,
 			meta_key varchar(255),
 			meta_value longtext,
+			post_date datetime,
 			UNIQUE KEY id (id)
 		)ENGINE= MYISAM CHARACTER SET utf8;";
 	require_once(ABSPATH.'wp-admin/includes/upgrade.php');

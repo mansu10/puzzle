@@ -184,7 +184,7 @@ a.comment-reply-link > span {
 	margin: 0 auto 1.625em;
 	padding: 1.625em;
 	position: relative;
-	width: 68.9%;
+/*	width: 68.9%;*/
 }
 #respond input[type="text"],
 #respond textarea {
@@ -266,7 +266,7 @@ a.comment-reply-link > span {
 	margin: 20px 0;
 	padding: 5px 42px 5px 22px;
 	position: relative;
-	left: 30px;
+	/*left: 30px;*/
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.3);
 }
 #respond input#submit:active {

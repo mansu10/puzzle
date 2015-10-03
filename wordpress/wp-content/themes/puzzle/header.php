@@ -20,7 +20,7 @@
 <?php flush(); ?>
 <body>
 
-	<header>
+	<header id="header">
 		<div class="logo">logo</div>
 		<ul class="nav">
 			<?php wp_nav_menu( array( 'theme_location'=> 'nav-menu','container' => 'li','container_class' => '','before'=> '','after' => '') ); ?>
@@ -35,6 +35,7 @@
 			<div class="logged">
 				<a href="" ><?php echo $current_user->display_name ?></a>
 				<ul class="op-box">
+					<li><a href="<?php bloginfo('url') ?>/wp-admin/admin.php?page=content_page">收藏列表</a></li>
 					<li><a href="<?php bloginfo('url'); ?>/wp-admin/profile.php">编辑资料</a></li>
 					<li><a href="<?php bloginfo('url'); ?>/wp-login.php?action=logout">退出</a></li>
 				</ul>
