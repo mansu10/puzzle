@@ -3,7 +3,7 @@
 		<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 		<p><?php the_tags('标签：', ', ', ''); ?> &bull; <?php the_time('Y年n月j日') ?> &bull; <?php comments_popup_link('0 条评论', '1 条评论', '% 条评论', '', '评论已关闭'); ?><?php edit_post_link('编辑', ' &bull; ', ''); ?></p>
 	</div>
-	<ul class="tabs-heading">
+	<ul class="tabs-heading" id="loadTitle">
 		<li data-url="product">Product</li>
 		<li data-url="reviews">Reviews</li>
 		<li data-url="discuss">Discuss</li>
@@ -142,7 +142,14 @@
 		<!-- activities -->
 		<div class="activities tabs" id="activities">
 			<div class="discussion-list">
-				<article>
+				<?php 
+					$res = showActivity($post->ID); 
+					//var_dump($res);
+					foreach ($res as $key => $value) {
+						echo $value;
+					}
+				?>
+				<!-- <article>
 					<figure>
 						<a href="" title=""><img src="<?php bloginfo('template_url'); ?>/img/avatar.png" height="50" width="50"></a>
 						<figcaption>Name</figcaption>
@@ -151,27 +158,7 @@
 					<footer>
 						<span>post time</span>
 					</footer>
-				</article>		
-				<article>
-					<figure>
-						<a href="" title=""><img src="<?php bloginfo('template_url'); ?>/img/avatar.png" height="50" width="50"></a>
-						<figcaption>Name</figcaption>
-					</figure>
-					<section>Activities goes here</section>
-					<footer>
-						<span>post time</span>
-					</footer>
-				</article>	
-				<article>
-					<figure>
-						<a href="" title=""><img src="<?php bloginfo('template_url'); ?>/img/avatar.png" height="50" width="50"></a>
-						<figcaption>Name</figcaption>
-					</figure>
-					<section>Activities goes here</section>
-					<footer>
-						<span>post time</span>
-					</footer>
-				</article>	
+				</article> -->
 			</div>
 		</div>					
 	</div>

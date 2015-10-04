@@ -218,6 +218,7 @@ class DisplayFavList extends WP_List_Table
 			'cb'      => '<input type="checkbox" />',
 			'id'      => '序号',
 			'title'   => '文章名',
+			'post_date' => '时间',
 			'url'	  => '查看'
 		);
 		return $columns;
@@ -293,6 +294,8 @@ class DisplayFavList extends WP_List_Table
 	    			$item['url'] = $post_detail->{'guid'};
 	    			$item['title'] = $post_detail->{'post_title'};
 	    			// echo var_dump($item);
+	    		} else if ($key == 'post_date') {
+	    			$item['post_date'] = $value;
 	    		}
 	    		$item['id'] = $i+1;
 	    	}
@@ -314,6 +317,7 @@ class DisplayFavList extends WP_List_Table
 		switch ( $column_name ) {
 			case 'id':
 			case 'title':
+			case 'post_date':
 				return $item[ $column_name ];
 			case 'url':
 				return '<a href="'.$item[ $column_name ].'" alt="查看详细">查看详细</a>';

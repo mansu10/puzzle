@@ -199,67 +199,51 @@ $(function(){
 
 	//tabs
 	$(function(){
-		$(document).on('click', '.nav-tabs .tabs-heading>li', function(event) {
-
-			var childId = '#' + $(this).attr('data-url');
-			console.log(childId);
-			$(this).addClass('active').siblings('li').removeClass('active');
+		var $contentWrap = $('#loadContent');
+		if ($contentWrap) {
+			var tabStatus = cookie('tabs');
+			if (tabStatus) {
+				tabsChange(tabStatus);
+			}else{
+				$('.tabs-heading li:first').addClass('active');
+				$('#loadContent .tabs:first').css('display', 'block');				
+			};
+			$(document).on('click', '.nav-tabs .tabs-heading>li', function(event) {
+				SetCookie('tabs', $(this).attr('data-url'));
+				var childId = $(this).attr('data-url');
+				console.log(childId);
+				$(this).addClass('active').siblings('li').removeClass('active');
+				tabsChange(childId);
+			});
+		};
+		function tabsChange(childId){
+			$('#loadTitle>li').filter('[data-url='+childId+']').addClass('active');
+			console.log($('#loadTitle>li').filter('[data-url='+childId+']'));
 			$('#loadContent .tabs').css('display', 'none');
-			$('#loadContent').find(childId).css('display', 'block');
-		});
-		$('.tabs-heading li:first').addClass('active');
-		$('#loadContent .tabs:first').css('display', 'block');
+			$('#loadContent').find('#'+childId).css('display', 'block');			
+		}
+		function cookie(name){    
+		 
+		   var cookieArray=document.cookie.split("; "); //得到分割的cookie名值对    
+		 
+		   var cookie=new Object();    
+		 
+		   for (var i=0;i<cookieArray.length;i++){    
+		 
+		      var arr=cookieArray[i].split("=");       //将名和值分开    
+		 
+		      if(arr[0]==name)return unescape(arr[1]); //如果是指定的cookie，则返回它的值    
+		 
+		   } 
+		   return ""; 
+		} 	
+		function SetCookie(name,value){
+		    document.cookie = name + "="+ escape (value);
+		}
+
 	})
 
 
-	function addCookie(objName,objValue,objHours){      //添加cookie
-	 
-	    var str = objName + "=" + escape(objValue);
-	 
-	    if(objHours > 0){                               //为时不设定过期时间，浏览器关闭时cookie自动消失
-	 
-	        var date = new Date();
-	 
-	        var ms = objHours*3600*1000;
-	 
-	        date.setTime(date.getTime() + ms);
-	 
-	        str += "; expires=" + date.toGMTString();
-	 
-	   }
-	 
-	   document.cookie = str;
-	 
-	}
-	function cookie(name){    
-	 
-	   var cookieArray=document.cookie.split("; "); //得到分割的cookie名值对    
-	 
-	   var cookie=new Object();    
-	 
-	   for (var i=0;i<cookieArray.length;i++){    
-	 
-	      var arr=cookieArray[i].split("=");       //将名和值分开    
-	 
-	      if(arr[0]==name)return unescape(arr[1]); //如果是指定的cookie，则返回它的值    
-	 
-	   } 
-	 
-	   return ""; 
-	 
-	} 	
-	function SetCookie(name,value)//两个参数，一个是cookie的名子，一个是值
-	 
-	{
-	 
-	    var Days = 1; //此 cookie 将被保存 30 天
-	 
-	    var exp = new Date();    //new Date("December 31, 9998");
-	 
-	    exp.setTime(exp.getTime() + Days*24*60*60*1000);
-	 
-	    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
-	 
-	}
+
 
 })

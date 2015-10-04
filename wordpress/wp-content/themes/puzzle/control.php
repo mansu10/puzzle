@@ -55,6 +55,51 @@ function contentManage(){
 }
 
 
+//activity 状态
+function showActivity($postid){
+	global $wpdb;
+	$table_name = $wpdb->prefix.'favorite';
+	$table_user = $wpdb->prefix.'users';
+	$result = $wpdb->get_results("SELECT * FROM $table_name WHERE postid='$postid' ORDER BY post_date DESC LIMIT 20");
+	$res = array();
+	for ($i=0; $i < count($result); $i++) { 
+    	foreach ($result[$i] as $key => $value) {
 
+    		switch ($key) {
+    			case 'userid':
+    			$e = "SELECT user_nicename FROM ".$table_user." WHERE ID=".$value."";
+    				$r = $wpdb->get_row("SELECT user_nicename FROM ".$table_user." WHERE ID=".$value."");
+    				$user_name = $r->{'user_nicename'};
+    				break;
+    			case 'meta_key':
+    				if ($value == 'like') {
+    					$user_action = ' 喜欢了这张拼图';
+    				}else if($value == 'own') {
+    					$user_action = ' 已拥有这张拼图';
+    				} else if ($value == 'list') {
+    					$user_action = ' 添加拼图到愿望单';
+    				}
+
+    				break;
+    			case 'post_date':
+    				$post_date = $value;
+    				break;
+    			default:
+    				# code...
+    				break;
+    		}
+    		$data = '<article>
+    					<section>'.$user_name.$user_action.'</section>
+    					<footer>
+    						<span>'.$post_date.'</span>
+    					</footer>
+    				</article>';
+
+    	}
+    	array_push($res, $data);
+	}
+	return $res;
+	
+}
 
  ?>
