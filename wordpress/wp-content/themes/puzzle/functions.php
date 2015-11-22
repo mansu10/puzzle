@@ -283,3 +283,80 @@ function twentyeleven_comment( $comment, $args, $depth ) {
 	endswitch;
 }
 endif; // ends check for twentyeleven_comment()
+?>
+<?php
+/**
+ * WordPress 仪表盘显示待审核的文章列表
+ * http://blog.wpjam.com/m/pending-posts-dashboard-widget/
+ */
+add_action('wp_dashboard_setup', 'wpjam_modify_dashboard_widgets' );
+function wpjam_modify_dashboard_widgets() {
+	global $wp_meta_boxes;
+
+	if(current_user_can('manage_options')){ //只有管理员才能看到
+		add_meta_box( 'pending_posts_dashboard_widget', '待审文章', 'pending_posts_dashboard_widget_function','dashboard', 'normal', 'core' );
+	}
+}
+
+function pending_posts_dashboard_widget_function() {
+	global $wpdb;
+	$pending_posts = $wpdb->get_results("SELECT * FROM {$wpdb->posts}  WHERE post_status = 'pending' ORDER BY post_modified DESC");
+
+	if($pending_posts){ //判断是否有待审文章
+		echo '<ul>';
+		foreach ($pending_posts as $pending_post){
+			echo '<li><a href="'.admin_url().'post.php?post='.$pending_post->ID.'&action=edit">'.$pending_post->post_title.'</a></li>';
+		}
+		echo '</ul>';
+	}else echo '目前没有待审文章';
+}
+
+/**
+ * Update the custom field when the form submits
+ *
+ * @param type $post_id
+ */
+function update_target_post( $post_id ) {
+    if ( isset( $_POST['_target_post'] ) ) {
+        update_post_meta( $post_id, '_target_post', $_POST['_target_post'] );
+    }
+}
+ 
+add_action( 'wpuf_add_post_after_insert', 'update_target_post' );
+add_action( 'wpuf_edit_post_after_update', 'update_target_post' );
+
+
+/**
+* Add the input field to the form
+*
+* @param int $form_id
+* @param null|int $post_id
+* @param array $form_settings
+*/
+function render_target_hook( $form_id, $post_id, $form_settings ) {
+    $value = '';
+ 
+    if ( $post_id ) {
+        $value = get_post_meta( $post_id, '_target_post', true );
+    }
+    ?>
+        <input type="hidden" id="targetpost" name="_target_post" value="<?php echo esc_attr( $value ); ?>">
+    <?php
+}
+
+add_action( 'target_hook', 'render_target_hook', 10, 3 );
+
+
+/**
+ * 获取postmeta key 为_target_post, value 为 target post id 的postid
+ * @param string $targetid
+ * @return array $postid
+ * 
+ */ 
+function get_origin_post_id($targetid) {
+	global $wpdb;
+	$table_name = $wpdb->prefix.'postmeta';
+	$review_posts = $wpdb->get_results("SELECT * FROM $table_name WHERE meta_key = '_target_post' and meta_value = '$targetid'");
+	return $review_posts;
+}
+?>

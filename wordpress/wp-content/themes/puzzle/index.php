@@ -3,7 +3,7 @@
 
 	<section class="disp-wrapper">
 		<div class="caption">
-			<img src="<?php bloginfo('template_url'); ?>/img/img1.jpg" height="350" width="100%">
+			<img src="<?php bloginfo('template_url'); ?>/img/bg.jpg" width="100%">
 			<p>Hope Is A Good Thing.</p>
 		</div>
 		<div class="search">

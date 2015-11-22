@@ -9,23 +9,29 @@
 
  get_header(); ?>
 
-	<div id="primary" class="forum-wrapper">
-
-		<div id="content" role="main">
-         
-			<?php while ( have_posts() ) : the_post(); ?>
-
-				<?php #get_template_part( 'content1', 'page' ); ?>
-
-				<?php comments_template( '', true ); ?>
-
-			<?php endwhile; // end of the loop. ?>
-
-		</div><!-- #content -->
-
-	</div><!-- #primary -->
+	<div id="primary" class="forum-wrapper"></div><!-- #primary -->
+	<div id="content" role="main">
+	 	<?php 
+	 		
+	 		if (isset($_GET['reviewid'])){
+	 			$reviewid = $_GET['reviewid'];
+	 		}else{
+	 			$reviewid = '';
+	 		}
+	 		while ( have_posts() ) : the_post();
+	 		#the_content();
+	 		endwhile;
+	 	 ?>
+	 	 <script type="text/javascript">
+	 	 	window.onload = function(){
+	 	 		var ele = document.getElementById('targetpost');
+	 	 		ele.value = <?php echo $reviewid ?>
+	 	 	}
+	 	 </script>
+	</div><!-- #content -->
 <div class="entry-content forum-wrapper">
 	<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyeleven' ) ); ?>
 	<?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'twentyeleven' ) . '</span>', 'after' => '</div>' ) ); ?>
 </div><!-- .entry-content -->
 <?php get_footer(); ?>
+

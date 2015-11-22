@@ -15,7 +15,7 @@
  |----------------------------------------------------------------|
 */
 @base:#ebeced;
-@head:#333;
+@head:rgba(15,110,113,0.5);
 @headhover:#777;
 /********** 1. IMPORT FILES **********/
 /*************************************/
@@ -146,7 +146,7 @@ textarea {
     height: 35px;
     padding: 0 50px;
     background-color: @head;
-    border-bottom: 1px solid #888;
+    // border-bottom: 1px solid #888;
     color: #fff;
     font-size: 14px;
     .logo {
@@ -309,7 +309,9 @@ textarea {
     }
 }
 
-footer {
+footer.footer {
+    background: url(../img/bg.jpg) no-repeat left bottom;
+    background-size: 100% auto;
     .contact {
         padding: 50px 70px;
         height: 350px;

@@ -52,11 +52,52 @@
 		    </div>
 		</div>
 		<!-- reviews -->
-		<div class="reviews tabs" id="reviews">
+		<div class="reviews tabs" id="reviews" data-review=<?php echo $post->ID; ?>>
 			<div class="add-comment">
-				<button class="btn">write commmets</button>
+				<!-- 部署之后需要根据情况更改 -->
+				<a class="btn" href="http://localhost/puzzle/wordpress/?p=150&reviewid=<?php  echo $post->ID;?>">写评测</a>
+				<!-- end -->
 			</div>
-			<article class="comment-wrapper">
+			<?php 
+				$post_id = $post->ID;
+				$posts_list = get_origin_post_id($post_id);
+				//var_dump($posts_list);
+				if ($posts_list) {
+					foreach ($posts_list as $review_post) {
+						$post_detail = get_post($review_post->post_id);
+						//var_dump($review_post->post_id);
+						//var_dump($post_detail);
+
+						?>
+						<article class="comment-wrapper">
+							<figure>
+								<a href="#" class="avatar"><?php echo get_avatar($post_detail->post_author,39); ?></a>
+								<figcaption><?php echo the_author_meta('user_nicename',$post_detail->post_author ); ?></figcaption>
+							</figure>
+							<header>
+								<?php echo $post_detail->post_title ?>
+							</header>
+							<section>
+								<?php echo $post_detail->post_content ?>
+							</section>
+							<footer>
+								<!-- <div class="addon-func">
+									<span class="fa fa-heart"></span><span>25</span>
+									<span class="fa fa-thumbs-up"></span><span>15</span>	
+								</div> -->
+								<div class="post-time">
+									<?php echo $post_detail->post_modified ?>
+								</div>
+							</footer>
+						</article>
+
+						<?php
+					}
+				}else{
+					echo "没有相关评测";
+				}
+			 ?>
+<!-- 			<article class="comment-wrapper">
 				<figure>
 					<a href="#" class="avatar"><img src="<?php bloginfo('template_url'); ?>/img/avatar.png"></a>
 					<figcaption>User Name</figcaption>
@@ -81,59 +122,8 @@
 						2015-07-22 21:55
 					</div>
 				</footer>
-			</article>
-			<article class="comment-wrapper">
-				<figure>
-					<a href="#" class="avatar"><img src="<?php bloginfo('template_url'); ?>/img/avatar.png"></a>
-					<figcaption>User Name</figcaption>
-				</figure>
-				<header>
-					What about this?
-				</header>
-				<section>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-				</section>
-				<footer>
-					<div class="addon-func">
-						<span class="fa fa-heart"></span><span>25</span>
-						<span class="fa fa-thumbs-up"></span><span>15</span>	
-					</div>
-					<div class="post-time">
-						2015-07-22 21:55
-					</div>
-				</footer>
-			</article>
-			<article class="comment-wrapper">
-				<figure>
-					<a href="#" class="avatar"><img src="<?php bloginfo('template_url'); ?>/img/avatar.png"></a>
-					<figcaption>User Name</figcaption>
-				</figure>
-				<header>
-					What about this?
-				</header>
-				<section>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-				</section>
-				<footer>
-					<div class="addon-func">
-						<span class="fa fa-heart"></span><span>25</span>
-						<span class="fa fa-thumbs-up"></span><span>15</span>	
-					</div>
-					<div class="post-time">
-						2015-07-22 21:55
-					</div>
-				</footer>
-			</article>
+			</article> -->
+
 		</div>
 		<!-- dicuss -->
 		<div class="discuss tabs" id="discuss">

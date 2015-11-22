@@ -28,7 +28,7 @@ $detailOptions = array(
 
 // 管理员界面绑定函数
 if (is_admin()) {
-	add_action('admin_menu','contentManage');
+	#add_action('admin_menu','contentManage');
 }
 
 /**

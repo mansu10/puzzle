@@ -9,6 +9,9 @@
 ?>
 <?php $count = 0; ?>
 <?php while ( have_posts() ) : the_post();
+		$id = $post->ID;
+		$user_id = get_post($id)->post_author;
+		if(user_can($user_id,'edit_others_posts')){
 ?>
 <div class="item-box">
 	<a href="<?php the_permalink(); ?>" target="_blank">
@@ -28,4 +31,5 @@
 
 
 <?php
+}
 endwhile;?>
