@@ -6,10 +6,7 @@
 			<img src="<?php bloginfo('template_url'); ?>/img/bg.jpg" width="100%">
 			<p>Hope Is A Good Thing.</p>
 		</div>
-		<div class="search">
-			<span class="fa fa-search"></span>
-			<input type="text" class="search-box">
-		</div>
+		<?php get_search_form(); ?>
 	</section>
 	<section class="content-wrapper">
 		<div class="main-content" id="waterfall">

@@ -127,11 +127,12 @@ textarea {
 .scroll {
     width: 50px;
     height: 50px;
-    background: #eee;
+    background: @head;
+    color: #fff;
     position: fixed;
     z-index: 20;
     bottom: 0;
-    right: 0;
+    right: 10px;
     display: none;
     text-align: center;
     cursor: pointer;
@@ -277,15 +278,7 @@ textarea {
                 margin-top: 10px;
                 border-top: 1px solid #333;
                 position: relative;
-                li {
-                    float: left;
-                    // width: 20px;
-                    height: 20px;
-                    line-height: 20px;
-                    text-align: center;
-                    margin-top: 5px;
-                    padding-right: 10px;
-                }
+                padding-top: 5px;
             }
         }
     }
@@ -329,5 +322,14 @@ footer.footer {
         color: #fff;
         background-color: @head;
         text-align: center;
+    }
+}
+
+@media screen and (max-width:1024px){
+    .content-wrapper .main-content {
+        padding-right: 0;
+    }
+    .side-content {
+        display: none;
     }
 }
